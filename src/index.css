@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer components{
-    .generic-input {
-        @apply bg-blue rounded w-[80%]
-    }
+@layer components {
+ .generic -input {
+  @apply bg-blue rounded w-[80%];
+ }
 }
