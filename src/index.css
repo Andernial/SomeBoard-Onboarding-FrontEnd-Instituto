@@ -7,3 +7,41 @@
   @apply bg-blue rounded w-[80%];
  }
 }
+
+@layer base {
+ @font-face {
+  font-family: 'poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Poppins-Regular.tff) format('truetype');
+ }
+ @font-face {
+  font-family: 'poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/Poppins-Bold.tff) format('truetype');
+ }
+ @font-face {
+  font-family: 'poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/Poppins-SemiBold.tff) format('truetype');
+ }
+ @font-face {
+    font-family: 'poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(/fonts/Poppins-Medium.tff) format('truetype');
+   }
+ @font-face {
+  font-family: 'openSans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/OpenSans-VariableFont_wdth,wght.tff) format('truetype');
+ }
+}
