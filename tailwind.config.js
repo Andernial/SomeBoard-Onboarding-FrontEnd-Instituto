@@ -9,8 +9,8 @@ export default {
   },
 
   fontFamily: {
-   primary: ['poppins', 'sans-serif'],
-   secundary: ['openSans', 'sans-serif'],
+   primary: ['Poppins', 'Sans-serif'],
+   secundary: ['OpenSans', 'Sans-serif'],
   },
 
   fontSize: {
@@ -42,21 +42,23 @@ export default {
   },
 
   spacing: {
-   s: '16px',
-   m: '24px',
-   mm: '32px',
-   l: '40px',
-   xl: '100px',
+   small: '16px',
+   medium: '24px',
+   'x-medium': '32px',
+   large: '40px',
+   'x-large': '100px',
   },
 
   colors: {
-   white: '#ffffff',
-   'x-light': '#f8f8f8',
-   light: '#e3e3e3',
-   medium: '#b5b5b5',
-   dark: '#626262',
-   'x-dark': '#303030',
-   'xx-dark': '#121212',
+   grayScale: {
+    white: '#ffffff',
+    light: '#f8f8f8',
+    'x-light': '#e3e3e3',
+    medium: '#b5b5b5',
+    dark: '#626262',
+    'x-dark': '#303030',
+    'xx-dark': '#121212',
+   },
 
    brand: {
     primary: {
@@ -78,7 +80,7 @@ export default {
 
    application: {
     icons: {
-     lighbg: {
+     lightbg: {
       clickable: '#303030',
       disable: '#b5b5b5',
       information: '#626262',
