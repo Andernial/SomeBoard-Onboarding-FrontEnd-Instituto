@@ -42,9 +42,9 @@ export default {
   },
 
   spacing: {
-   small: '16px',
-   medium: '24px',
-   'x-medium': '32px',
+   'x-small': '16px',
+   small: '24px',
+   medium: '32px',
    large: '40px',
    'x-large': '100px',
   },
@@ -52,8 +52,8 @@ export default {
   colors: {
    grayScale: {
     white: '#ffffff',
-    light: '#f8f8f8',
     'x-light': '#e3e3e3',
+    light: '#f8f8f8',  
     medium: '#b5b5b5',
     dark: '#626262',
     'x-dark': '#303030',
