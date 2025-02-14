@@ -1,4 +1,4 @@
-import Button from "@atomic/atm.button/button.component";
+import Button from '@atomic/atm.button/button.component';
 
 function LoginPage() {
  return (
@@ -12,7 +12,7 @@ function LoginPage() {
      <input type="text" className="generic-input" name="email" id="" />
      <label htmlFor="password">password</label>
      <input type="text" className="generic-input" name="password" id="" />
-     <Button label="Enviar" />
+     <Button>Enviar</Button>
     </form>
    </div>
   </div>

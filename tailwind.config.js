@@ -12,7 +12,7 @@ export default withTV({
 
   fontFamily: {
    primary: ['Poppins', 'Sans-serif'],
-   secundary: ['OpenSans', 'Sans-serif'],
+   secondary: ['OpenSans', 'Sans-serif'],
   },
 
   fontSize: {
@@ -109,7 +109,7 @@ export default withTV({
      light: '#f9d3d2',
      medium: '#d42f29',
      dark: '#801a16',
-     xdark: '#450f0d',
+     'x-dark': '#450f0d',
     },
 
     warning: {

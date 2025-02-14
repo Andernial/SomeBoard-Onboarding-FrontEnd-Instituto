@@ -1,11 +1,16 @@
+import React from 'react';
 import { button, ButtonVariants } from './button.component.style';
 
 interface ButtonProps extends ButtonVariants {
- label: string;
+ children: React.ReactNode;
 }
 
-function Button(props: ButtonProps) {
- return <button type='button' className={button(props)}>{props.label}</button>;
+function Button({ color, disabled, children }: ButtonProps) {
+ return (
+  <button type="button" className={button({ color, disabled })}>
+   {children}
+  </button>
+ );
 }
 
 export default Button;
