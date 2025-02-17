@@ -1,5 +1,5 @@
 import { loginPageStrings } from './login.page.strings';
-import Button from '@atomic/atm.button/button.component';
+import {Button} from '@atomic/atm.button/button.component';
 
 function LoginPage() {
  return (
