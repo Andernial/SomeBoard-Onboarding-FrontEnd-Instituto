@@ -18,7 +18,7 @@ export const button = tv({
 
   type: {
    link:
-    'bg- text-brand-primary-dark hover:decoration-from-font hover:underline focus:outline-brand-primary-dark active:text-brand-accessory-magenta active:outline-none',
+    'bg-transparent text-brand-primary-dark hover:decoration-from-font hover:underline focus:outline-brand-primary-dark active:text-brand-accessory-magenta active:outline-none',
   },
 
   disabled: {
@@ -34,7 +34,7 @@ export const button = tv({
   {
    type: 'link',
    color: 'primary',
-   className: 'bg-transparent hover:bg-trasparent active:bg-',
+   className: 'bg-transparent hover:bg-trasparent active:bg-transparent',
   },
   {
    type: 'link',
