@@ -1,3 +1,4 @@
+import { loginPageStrings } from './login.page.strings';
 import Button from '@atomic/atm.button/button.component';
 
 function LoginPage() {
@@ -8,11 +9,11 @@ function LoginPage() {
    </header>
    <div className="h-64 w-56 bg-white rounded-2xl text-center flex flex-col justify-center items-center">
     <form action="" className="flex flex-col justify-center items-center">
-     <label htmlFor="email">email</label>
+     <label htmlFor="email">{loginPageStrings.labels.email}</label>
      <input type="text" className="generic-input" name="email" id="" />
-     <label htmlFor="password">password</label>
+     <label htmlFor="password">{loginPageStrings.labels.password}</label>
      <input type="text" className="generic-input" name="password" id="" />
-     <Button>Enviar</Button>
+     <Button>{loginPageStrings.sumbmitButton}</Button>
     </form>
    </div>
   </div>
