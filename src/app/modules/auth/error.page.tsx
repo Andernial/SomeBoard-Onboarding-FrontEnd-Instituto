@@ -9,9 +9,7 @@ function ErrorPage() {
   <div>
    <h1>{errorPageStrings.errorMessage}</h1>
    <h2>{isRouteErrorResponse(error) ? error.statusText : null}</h2>
-   <LinkButton pathname="/login" color="link">
-    {errorPageStrings.linkButton}
-   </LinkButton>
+   <LinkButton pathname='/login'>voltar para tela de login</LinkButton>
   </div>
  );
 }

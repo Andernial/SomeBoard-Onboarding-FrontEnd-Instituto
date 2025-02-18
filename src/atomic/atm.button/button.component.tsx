@@ -21,11 +21,10 @@ export function Button({ color, disabled, children }: ButtonProps) {
  );
 }
 
-export function LinkButton({ color, disabled, children, pathname, search, hash }: LinkButtonProps) {
+export function LinkButton({ disabled, children, pathname, search, hash }: LinkButtonProps) {
  return (
-  <Link to={{ pathname, search, hash }} className={button({ color, disabled })}>
+  <Link to={{ pathname, search, hash }} className={button({ type: 'link', disabled })}>
    {children}
   </Link>
  );
 }
-
