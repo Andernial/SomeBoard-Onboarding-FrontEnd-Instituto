@@ -73,5 +73,5 @@ export function InputValue({ className, children }: InputProps) {
 }
 
 export function InputCaption({ className, children }: InputProps) {
- return <small className={input({ className, type: 'caption' })}>{children}</small>;
+ return <span className={input({ className, type: 'caption' })}>{children}</span>;
 }
