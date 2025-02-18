@@ -1,5 +1,7 @@
+import { withTV } from 'tailwind-variants/dist/transformer.js';
+
 /** @type {import('tailwindcss').Config} */
-export default {
+export default withTV({
  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
  theme: {
   screens: {
@@ -10,7 +12,7 @@ export default {
 
   fontFamily: {
    primary: ['Poppins', 'Sans-serif'],
-   secundary: ['OpenSans', 'Sans-serif'],
+   secondary: ['OpenSans', 'Sans-serif'],
   },
 
   fontSize: {
@@ -50,10 +52,12 @@ export default {
   },
 
   colors: {
+   lightGreen: '#A3DA58',
+
    grayScale: {
     white: '#ffffff',
     'x-light': '#e3e3e3',
-    light: '#f8f8f8',  
+    light: '#f8f8f8',
     medium: '#b5b5b5',
     dark: '#626262',
     'x-dark': '#303030',
@@ -105,7 +109,7 @@ export default {
      light: '#f9d3d2',
      medium: '#d42f29',
      dark: '#801a16',
-     xdark: '#450f0d',
+     'x-dark': '#450f0d',
     },
 
     warning: {
@@ -117,4 +121,4 @@ export default {
   },
  },
  plugins: [],
-};
+});
