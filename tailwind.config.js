@@ -16,12 +16,12 @@ export default withTV({
   },
 
   fontSize: {
-   'x-small': '14px',
-   small: '16px',
-   medium: '18px',
-   large: '24px',
-   'x-large': '28px',
-   'xx-large': '48px',
+   xsm: '14px',
+   sm: '16px',
+   md: '18px',
+   lg: '24px',
+   xl: '28px',
+   '2xl': '48px',
   },
 
   fontWeight: {
@@ -38,17 +38,18 @@ export default withTV({
   },
 
   borderRadius: {
-   small: '08px',
-   medium: '12px',
-   large: '24px',
+   sm: '08px',
+   md: '12px',
+   lg: '24px',
   },
 
   spacing: {
-   'x-small': '16px',
-   small: '24px',
-   medium: '32px',
-   large: '40px',
-   'x-large': '100px',
+   xxsm: '8px',
+   xsm: '16px',
+   sm: '24px',
+   md: '32px',
+   lg: '40px',
+   xl: '100px',
   },
 
   colors: {
@@ -56,12 +57,12 @@ export default withTV({
 
    grayScale: {
     white: '#ffffff',
-    'x-light': '#e3e3e3',
+    xlight: '#e3e3e3',
     light: '#f8f8f8',
     medium: '#b5b5b5',
     dark: '#626262',
-    'x-dark': '#303030',
-    'xx-dark': '#121212',
+    xdark: '#303030',
+    xxdark: '#121212',
    },
 
    brand: {
@@ -69,11 +70,11 @@ export default withTV({
      light: '#bdffe4',
      medium: '#01d5ad',
      dark: '#0a6c53',
-     'x-dark': '#054334',
+     xdark: '#054334',
     },
 
     accessory: {
-     'x-light': '#e3f9f4',
+     xlight: '#e3f9f4',
      light: '#90e8d0',
      medium: '#00b69d',
      beige: '#fcf9f4',
@@ -109,7 +110,7 @@ export default withTV({
      light: '#f9d3d2',
      medium: '#d42f29',
      dark: '#801a16',
-     'x-dark': '#450f0d',
+     xdark: '#450f0d',
     },
 
     warning: {
