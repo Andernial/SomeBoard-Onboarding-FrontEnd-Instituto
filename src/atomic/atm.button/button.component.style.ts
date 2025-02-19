@@ -14,8 +14,11 @@ export const button = tv({
    'destructive-secondary':
     'bg-none border-2 text-feedback-error-medium border-feedback-error-medium hover:border-feedback-error-dark hover:text-feedback-error-dark focus:border-feedback-error-medium focus:outline-feedback-error-dark focus:text-feedback-error-medium active:text-feedback-error-x-dark active:border-feedback-error-x-dark',
    cta: 'bg-grayScale-x-dark text-grayScale-white hover:bg-grayScale-dark focus:outline-grayScale-x-dark active:bg-grayScale-xx-dark',
+  },
+
+  type: {
    link:
-    'bg-none text-brand-primary-dark hover:decoration-from-font hover:underline focus:outline-brand-primary-dark active:text-brand-accessory-magenta active:outline-none',
+    'bg-transparent text-brand-primary-dark hover:decoration-from-font hover:underline focus:outline-brand-primary-dark active:text-brand-accessory-magenta active:outline-none',
   },
 
   disabled: {
@@ -29,7 +32,12 @@ export const button = tv({
 
  compoundVariants: [
   {
-   color: 'link',
+   type: 'link',
+   color: 'primary',
+   className: 'bg-transparent hover:bg-trasparent active:bg-transparent',
+  },
+  {
+   type: 'link',
    disabled: true,
    className: 'text-grayScale-dark opacity-100',
   },
