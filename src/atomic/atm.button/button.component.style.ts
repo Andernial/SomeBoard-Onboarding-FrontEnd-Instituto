@@ -2,18 +2,18 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const button = tv({
  base:
-  'box-border font-secondary rounded-small p-[2px] w-3/4 m-x-small transition-all duration-500 focus:outline focus:duration-150',
+  'box-border font-secondary rounded-sm py-xxsm px-xsm m-xxsm transition-all duration-500 focus:outline focus:duration-150',
  variants: {
   color: {
    primary:
-    'bg-brand-primary-dark hover:bg-brand-primary-x-dark text-grayScale-white  focus:outline-lightGreen active:bg-grayScale-x-dark  ',
+    'bg-brand-primary-dark hover:bg-brand-primary-xdark text-grayScale-white  focus:outline-lightGreen active:bg-grayScale-xdark  ',
    secondary:
-    'bg-none text-brand-primary-dark border-2 border-brand-primary-dark hover:text-brand-primary-x-dark hover:border-brand-primary-x-dark active:border-brand-primary-x-dark active:text-brand-primary-x-dark',
+    'bg-none text-brand-primary-dark border-2 border-brand-primary-dark hover:text-brand-primary-xdark hover:border-brand-primary-xdark active:border-brand-primary-xdark active:text-brand-primary-xdark',
    destructive:
-    'bg-feedback-error-medium text-grayScale-white hover:bg-feedback-error-dark focus:outline-feedback-error-dark active:bg-feedback-error-x-dark',
+    'bg-feedback-error-medium text-grayScale-white hover:bg-feedback-error-dark focus:outline-feedback-error-dark active:bg-feedback-error-xdark',
    'destructive-secondary':
-    'bg-none border-2 text-feedback-error-medium border-feedback-error-medium hover:border-feedback-error-dark hover:text-feedback-error-dark focus:border-feedback-error-medium focus:outline-feedback-error-dark focus:text-feedback-error-medium active:text-feedback-error-x-dark active:border-feedback-error-x-dark',
-   cta: 'bg-grayScale-x-dark text-grayScale-white hover:bg-grayScale-dark focus:outline-grayScale-x-dark active:bg-grayScale-xx-dark',
+    'bg-none border-2 text-feedback-error-medium border-feedback-error-medium hover:border-feedback-error-dark hover:text-feedback-error-dark focus:border-feedback-error-medium focus:outline-feedback-error-dark focus:text-feedback-error-medium active:text-feedback-error-xdark active:border-feedback-error-xdark',
+   cta: 'bg-grayScale-xdark text-grayScale-white hover:bg-grayScale-dark focus:outline-grayScale-xdark active:bg-grayScale-xxdark',
   },
 
   type: {
