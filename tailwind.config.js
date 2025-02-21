@@ -56,6 +56,7 @@ export default withTV({
 
   colors: {
    lightGreen: '#A3DA58',
+   transparent: '#00000000',
 
    grayScale: {
     white: '#ffffff',
