@@ -1,7 +1,7 @@
 import { TextInputVariants, textInput } from './text-input.component.style';
 import { Input } from '@/components/ui/input';
 
-interface textInputProps extends TextInputVariants {
+interface textInputProps extends React.ComponentProps<typeof Input>, TextInputVariants {
  className?: string;
  placeholder?: string;
 }

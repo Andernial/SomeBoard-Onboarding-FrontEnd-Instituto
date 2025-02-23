@@ -4,7 +4,7 @@ export const textInput = tv({
  base:
   'h-lg border bg-transparent rounded-xsm focus:outline-none  p-xsm focus:border-brand-primary-dark placeholder:text-grayScale-dark',
  variants: {
-  color: {
+  state: {
    default: 'border-grayScale-medium',
   },
 
@@ -17,7 +17,7 @@ export const textInput = tv({
   },
  },
  defaultVariants: {
-  color: 'default',
+  state: 'default',
  },
 });
 
