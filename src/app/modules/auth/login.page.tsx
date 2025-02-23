@@ -1,6 +1,6 @@
 import { loginPageStrings } from './login.page.strings';
 import { Button } from '@/atomic/atm.button';
-import { TextInput } from '@/atomic/atm.text-input';
+import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 
 function LoginPage() {
  return (
@@ -13,7 +13,7 @@ function LoginPage() {
      <label htmlFor="email">{loginPageStrings.labels.email}</label>
      <TextInput placeholder="e-mail" />
      <label htmlFor="password">{loginPageStrings.labels.password}</label>
-     <TextInput placeholder="senha" />
+     <PasswordInput />
      <Button>{loginPageStrings.sumbmitButton}</Button>
     </form>
    </div>

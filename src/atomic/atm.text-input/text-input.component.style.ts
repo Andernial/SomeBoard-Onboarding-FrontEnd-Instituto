@@ -21,4 +21,11 @@ export const textInput = tv({
  },
 });
 
+export const inputIcon = tv({
+ slots: {
+  icon: 'size-sm',
+  button: 'size-sm absolute right-xxsm focus:outline-none',
+ },
+});
+
 export type TextInputVariants = VariantProps<typeof textInput>;
