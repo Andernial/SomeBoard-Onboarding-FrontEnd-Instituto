@@ -13,7 +13,7 @@ function LoginPage() {
      <label htmlFor="email">{loginPageStrings.labels.email}</label>
      <TextInput placeholder="e-mail" />
      <label htmlFor="password">{loginPageStrings.labels.password}</label>
-     <PasswordInput />
+     <PasswordInput placeholder='senha' />
      <Button>{loginPageStrings.sumbmitButton}</Button>
     </form>
    </div>
