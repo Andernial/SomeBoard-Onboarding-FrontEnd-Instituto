@@ -2,6 +2,7 @@ import { withTV } from 'tailwind-variants/dist/transformer.js';
 
 /** @type {import('tailwindcss').Config} */
 export default withTV({
+ darkMode: ['class'],
  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
  theme: {
   screens: {
@@ -38,6 +39,7 @@ export default withTV({
   },
 
   borderRadius: {
+   xs: '04px',
    sm: '08px',
    md: '12px',
    lg: '24px',
@@ -54,6 +56,7 @@ export default withTV({
 
   colors: {
    lightGreen: '#A3DA58',
+   transparent: '#00000000',
 
    grayScale: {
     white: '#ffffff',
@@ -120,6 +123,9 @@ export default withTV({
     },
    },
   },
+  extend: {
+   colors: {},
+  },
  },
- plugins: [],
+ plugins: [require('tailwindcss-animate')],
 });

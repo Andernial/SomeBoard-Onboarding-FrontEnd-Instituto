@@ -23,7 +23,21 @@ export const input = tv({
    value: 'text-grayScale-medium ',
    caption: 'text-feedback-success-dark ',
   },
+  error: { true: '!text-feedback-error-dark' },
  },
+
+ compoundVariants: [
+  {
+   type: 'label',
+   error: true,
+   className: 'text-grayScale-xdark ',
+  },
+  {
+    type: 'value',
+    error: true,
+    className: 'text-grayScale-medium  ',
+   },
+ ],
 });
 
 export type TypographyVariants = VariantProps<typeof typography>;
