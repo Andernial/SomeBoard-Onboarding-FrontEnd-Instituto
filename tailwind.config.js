@@ -39,7 +39,7 @@ export default withTV({
   },
 
   borderRadius: {
-   xsm: '04px',
+   xs: '04px',
    sm: '08px',
    md: '12px',
    lg: '24px',
