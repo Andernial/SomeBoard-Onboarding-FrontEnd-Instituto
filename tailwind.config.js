@@ -17,7 +17,7 @@ export default withTV({
   },
 
   fontSize: {
-   xsm: '14px',
+   xs: '14px',
    sm: '16px',
    md: '18px',
    lg: '24px',
@@ -46,8 +46,8 @@ export default withTV({
   },
 
   spacing: {
-   xxsm: '8px',
-   xsm: '16px',
+   xxs: '8px',
+   xs: '16px',
    sm: '24px',
    md: '32px',
    lg: '40px',
