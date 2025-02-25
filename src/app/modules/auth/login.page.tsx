@@ -1,6 +1,6 @@
 import { loginPageStrings } from './login.page.strings';
 import { Button } from '@/atomic/atm.button';
-import { TextInput } from '@/atomic/atm.text-input';
+import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 
 function LoginPage() {
  return (
@@ -11,9 +11,9 @@ function LoginPage() {
    <div className="h-64 w-56 bg-white rounded-2xl text-center flex flex-col justify-center items-center">
     <form action="" className="flex flex-col justify-center items-center">
      <label htmlFor="email">{loginPageStrings.labels.email}</label>
-     <TextInput placeholder="e-mail" />
+     <TextInput placeholder={loginPageStrings.placeHolders.email} />
      <label htmlFor="password">{loginPageStrings.labels.password}</label>
-     <TextInput placeholder="senha" />
+     <PasswordInput placeholder={loginPageStrings.placeHolders.password} />
      <Button>{loginPageStrings.sumbmitButton}</Button>
     </form>
    </div>

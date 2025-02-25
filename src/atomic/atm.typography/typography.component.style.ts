@@ -9,9 +9,9 @@ export const typography = tv({
   h3: 'font-semibold text-md leading-1.2',
   h4: 'font-medium text-sm leading-1.5',
   b1: 'font-secondary font-regular text-sm text-grayScale-xdark leading-1.5 ',
-  b2: 'font-secondary font-regular text-xsm text-grayScale-dark leading-1.5 ',
+  b2: 'font-secondary font-regular text-xs text-grayScale-dark leading-1.5 ',
   link: 'font-secondary font-semibold text-grayScale-dark leading-1.5 text-sm ',
-  linkSmall: 'font-secondary font-semibold text-grayScale-dark leading-1.5 text-xsm',
+  linkSmall: 'font-secondary font-semibold text-grayScale-dark leading-1.5 text-xs',
  },
 });
 
