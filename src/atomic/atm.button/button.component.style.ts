@@ -16,7 +16,7 @@ export const button = tv({
    cta: 'bg-grayScale-xdark text-grayScale-white hover:bg-grayScale-dark focus:outline-grayScale-xdark active:bg-grayScale-xxdark',
   },
 
-  type: {
+  style: {
    link:
     'bg-transparent text-brand-primary-dark hover:decoration-from-font hover:underline focus:outline-brand-primary-dark active:text-brand-accessory-magenta active:outline-none',
   },
@@ -32,12 +32,12 @@ export const button = tv({
 
  compoundVariants: [
   {
-   type: 'link',
+   style: 'link',
    color: 'primary',
    className: 'bg-transparent hover:bg-trasparent active:bg-transparent',
   },
   {
-   type: 'link',
+   style: 'link',
    disabled: true,
    className: 'text-grayScale-dark opacity-100',
   },
