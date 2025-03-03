@@ -12,7 +12,7 @@ export default withTV({
   },
 
   backgroundImage: {
-   guina: "url('./src/assets/images/guina2.jpeg')",
+   guina: "url('./src/assets/images/guina.jpeg')",
   },
 
   fontFamily: {
