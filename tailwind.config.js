@@ -11,6 +11,10 @@ export default withTV({
    lg: '1440px',
   },
 
+  backgroundImage: {
+   guina: "url('./src/assets/images/guina2.jpeg')",
+  },
+
   fontFamily: {
    primary: ['Poppins', 'Sans-serif'],
    secondary: ['OpenSans', 'Sans-serif'],

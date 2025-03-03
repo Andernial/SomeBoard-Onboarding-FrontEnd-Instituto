@@ -2,7 +2,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const typography = tv({
  slots: {
-  base: 'font-primary text-grayScale-white',
+  base: 'font-primary text-grayScale-white py-xxs',
   display: 'font-bold text-2xl leading-1.2',
   h1: 'font-semibold text-xl leading-1.2',
   h2: 'font-semibold text-lg leading-1.2',
@@ -10,7 +10,7 @@ export const typography = tv({
   h4: 'font-medium text-sm leading-1.5',
   b1: 'font-secondary font-regular text-sm text-grayScale-xdark leading-1.5 ',
   b2: 'font-secondary font-regular text-xs text-grayScale-dark leading-1.5 ',
-  link: 'font-secondary font-semibold text-grayScale-dark leading-1.5 text-sm ',
+  link: 'font-secondary font-semibold text-brand-primary-dark leading-1.5 text-sm ',
   linkSmall: 'font-secondary font-semibold text-grayScale-dark leading-1.5 text-xs',
  },
 });
@@ -33,10 +33,10 @@ export const input = tv({
    className: 'text-grayScale-xdark ',
   },
   {
-    type: 'value',
-    error: true,
-    className: 'text-grayScale-medium  ',
-   },
+   type: 'value',
+   error: true,
+   className: 'text-grayScale-medium  ',
+  },
  ],
 });
 

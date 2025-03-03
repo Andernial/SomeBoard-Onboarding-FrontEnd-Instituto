@@ -1,8 +1,7 @@
 import { tv, VariantProps } from 'tailwind-variants';
 
 export const button = tv({
- base:
-  'box-border font-secondary rounded-sm py-xxs px-xs m-xxs transition-all duration-500 focus:outline focus:duration-150',
+ base: 'box-border font-secondary rounded-sm py-xxs px-xs transition-all duration-500 focus:outline focus:duration-150',
  variants: {
   color: {
    primary:
@@ -42,6 +41,12 @@ export const button = tv({
    className: 'text-grayScale-dark opacity-100',
   },
  ],
+});
+
+export const buttonIcon = tv({
+ slots: {
+  icon: 'size-sm vertical mr-xxs inline focus:outline-none',
+ },
 });
 
 export type ButtonVariants = VariantProps<typeof button>;
