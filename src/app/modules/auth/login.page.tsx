@@ -8,6 +8,8 @@ import { B1, H1, InputCaption, InputLabel } from '@/atomic/atm.typography';
 import { loginPageStrings } from './login.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
+import useLogin from '@domain/auth/login.use-case';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
  const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -18,8 +20,20 @@ function LoginPage() {
   },
  });
 
+ const navigate = useNavigate();
+
+ const { login, loading } = useLogin({
+  onCompleted: (data) => {
+   navigate('/');
+  },
+  onError: (data) => {
+   console.log(data);
+   alert(data.message);
+  },
+ });
+
  const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
-  console.log(values);
+  login({ loginData: { email: values.email, password: values.password } });
  };
 
  return (
@@ -41,7 +55,7 @@ function LoginPage() {
         name="email"
         render={({ field }) => (
          <FormItem>
-          <InputLabel className='my-xxs'>{loginPageStrings.labels.email}</InputLabel>
+          <InputLabel className="my-xxs">{loginPageStrings.labels.email}</InputLabel>
           <FormControl>
            <TextInput
             error={!!form.formState.errors.email}
@@ -74,7 +88,7 @@ function LoginPage() {
        <LinkButton className="self-end mt-xs" pathname="placeholder">
         {loginPageStrings.forgotMessage}
        </LinkButton>
-       <Button type="submit" className="w-full mt-md" color="primary">
+       <Button type="submit" className="w-full mt-md" color="primary" disabled={!!loading}>
         Entrar
        </Button>
        <div className="flex items-center w-full pt-xs">
