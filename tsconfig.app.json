@@ -8,10 +8,12 @@
   "skipLibCheck": true,
   "baseUrl": "./",
   "paths": {
-   "@/*": ["src/*"],
    "@components/*": ["src/components/*"],
    "@assets/*": ["src/assets/*"],
-   "@atomic/*": ["src/atomic/*"]
+   "@atomic/*": ["src/atomic/*"],
+   "@data/*": ["src/app/data/*"],
+   "@domain/*": ["src/app/domain/*"],
+   "@/*": ["src/*"]
   },
 
   /* Bundler mode */
