@@ -33,7 +33,7 @@ function LoginPage() {
 
     <Form {...form}>
      <form className="h-full flex items-center justify-center" onSubmit={form.handleSubmit(handleSubmit)}>
-      <div className="flex flex-col items-center w-[448px] h-max[478px] p-sm pt-md">
+      <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
        <H1>{loginPageStrings.formTitle}</H1>
        <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
        <FormField
@@ -79,7 +79,7 @@ function LoginPage() {
        </Button>
        <div className="flex items-center w-full pt-xs">
         <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
-        <span className="px-4 text-gray-500">ou</span>
+        <span className="px-sm">ou</span>
         <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
        </div>
        <B1>
