@@ -64,14 +64,14 @@ export function LinkSmall({ className, href, target, rel, children }: Typography
  );
 }
 
-export function InputLabel({ className, children }: InputProps) {
- return <label className={input({ className, type: 'label' })}>{children}</label>;
+export function InputLabel({ className, children, ...props }: InputProps) {
+ return <label className={input({ className, type: 'label', ...props })}>{children}</label>;
 }
 
-export function InputValue({ className, children }: InputProps) {
- return <label className={input({ className, type: 'value' })}>{children}</label>;
+export function InputValue({ className, children, ...props }: InputProps) {
+ return <label className={input({ className, type: 'value', ...props })}>{children}</label>;
 }
 
-export function InputCaption({ className, children }: InputProps) {
- return <span className={input({ className, type: 'caption' })}>{children}</span>;
+export function InputCaption({ className, children, ...props }: InputProps) {
+ return <span className={input({ className, type: 'caption', ...props })}>{children}</span>;
 }
