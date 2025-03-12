@@ -10,8 +10,11 @@ import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
 import useLogin from '@domain/auth/login.use-case';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function LoginPage() {
+ const [reqError, setReqError] = useState('');
+
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
   defaultValues: {
@@ -27,13 +30,16 @@ function LoginPage() {
    navigate('/');
   },
   onError: (data) => {
-   console.log(data);
-   alert(data.message);
+   setReqError(data.message);
   },
  });
 
  const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
   login({ loginData: { email: values.email, password: values.password } });
+ };
+
+ const handleInputFocus = () => {
+  setReqError('');
  };
 
  return (
@@ -46,10 +52,17 @@ function LoginPage() {
     </header>
 
     <Form {...form}>
-     <form className="h-full flex items-center justify-center" onSubmit={form.handleSubmit(handleSubmit)}>
+     <form
+      className="h-full flex items-center justify-center"
+      onSubmit={form.handleSubmit(handleSubmit)}
+      onChange={handleInputFocus}
+     >
       <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
        <H1>{loginPageStrings.formTitle}</H1>
        <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
+       <InputCaption className="break-words whitespace-normal text-center w-3/4" error={true}>
+        {reqError}
+       </InputCaption>
        <FormField
         control={form.control}
         name="email"
@@ -63,7 +76,9 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          <InputCaption error={!!form.formState.errors.email}>{form.formState.errors.email?.message}</InputCaption>
+          <InputCaption className="text-center" error={!!form.formState.errors.email}>
+           {form.formState.errors.email?.message}
+          </InputCaption>
          </FormItem>
         )}
        />
@@ -81,7 +96,9 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          <InputCaption error={true}>{form.formState.errors.password?.message}</InputCaption>
+          <InputCaption className="text-center" error={true}>
+           {form.formState.errors.password?.message}
+          </InputCaption>
          </FormItem>
         )}
        />
