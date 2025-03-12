@@ -12,11 +12,7 @@ function useLogin({ onCompleted, onError }: UseLoginProps) {
   onError,
  });
 
- const login = async (variables: LoginMutationVariables) => {
-  await loginMutation({ variables });
- };
-
- return { login, loading, error };
+ return { loginMutation, loading, error };
 }
 
 export default useLogin;
