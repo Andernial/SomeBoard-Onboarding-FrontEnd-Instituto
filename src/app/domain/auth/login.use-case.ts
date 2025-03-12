@@ -12,7 +12,11 @@ function useLogin({ onCompleted, onError }: UseLoginProps) {
   onError,
  });
 
- return { loginMutation, loading, error };
+ const login = (variables: LoginMutationVariables) => {
+  return loginMutation({ variables });
+ };
+
+ return { login, loading, error };
 }
 
 export default useLogin;
