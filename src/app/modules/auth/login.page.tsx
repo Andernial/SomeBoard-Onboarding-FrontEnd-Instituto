@@ -24,6 +24,7 @@ function LoginPage() {
 
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
+  mode: 'onChange',
   defaultValues: {
    password: '',
    email: '',
@@ -70,7 +71,7 @@ function LoginPage() {
       onSubmit={form.handleSubmit(handleSubmit)}
       onChange={handleInputFocus}
      >
-      <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
+      <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
        <H1>{loginPageStrings.formTitle}</H1>
        <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
        {reqError ? <ErrorCaption>{reqError}</ErrorCaption> : null}
@@ -126,7 +127,10 @@ function LoginPage() {
        <B1>
         <span>{loginPageStrings.accountQuestion}</span>
         <span>
-         <LinkButton className="px-xxs inline-flex" pathname="placeholder">
+         <LinkButton
+          className="px-xxs inline-flex focus:outline-transparent align-middle outline-none active:outline-none"
+          pathname={AuthRoutes.REGISTER}
+         >
           {loginPageStrings.register}
          </LinkButton>
         </span>
@@ -136,7 +140,7 @@ function LoginPage() {
     </Form>
    </section>
 
-   <section className="w-1/2 h-svh flex justify-end bg-guina bg-cover bg-center bg-no-repeat"></section>
+   <section className="w-1/2 flex justify-end bg-guina bg-no-repeat bg-center "></section>
   </div>
  );
 }
