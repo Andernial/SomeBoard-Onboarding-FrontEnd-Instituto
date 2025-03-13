@@ -3,15 +3,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { AuthRoutes } from './auth.rotes';
-import { B1, H1, InputCaption, InputLabel } from '@/atomic/atm.typography';
+import { B1, H1, InputLabel } from '@/atomic/atm.typography';
 import { loginPageStrings } from './login.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
 import { useLogin } from '@domain/auth/login.use-case';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import errorCaptionIcon from '@assets/icons/error-caption.png';
+
 import z from 'zod';
+import { ErrorCaption } from '@atomic/atm.error-caption';
 
 function LoginPage() {
  const [reqError, setReqError] = useState('');
@@ -62,14 +63,7 @@ function LoginPage() {
       <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
        <H1>{loginPageStrings.formTitle}</H1>
        <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
-       {reqError ? (
-        <div className="inline-flex items-start gap-[2px]">
-         <img className="mt-[2px]" src={errorCaptionIcon} />
-         <InputCaption className="break-words whitespace-normal" error={true}>
-          {reqError}
-         </InputCaption>
-        </div>
-       ) : null}
+       {reqError ? <ErrorCaption>{reqError}</ErrorCaption> : null}
 
        <FormField
         control={form.control}
@@ -84,12 +78,7 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          {form.formState.errors.email ? (
-           <div className="inline-flex items-start gap-[2px]">
-            <img className="mt-[2px]" src={errorCaptionIcon} alt="" />
-            <InputCaption error={!!form.formState.errors.email}>{form.formState.errors.email?.message}</InputCaption>
-           </div>
-          ) : null}
+          {form.formState.errors.email ? <ErrorCaption>{form.formState.errors.email.message}</ErrorCaption> : null}
          </FormItem>
         )}
        />
@@ -108,12 +97,7 @@ function LoginPage() {
            />
           </FormControl>
           {form.formState.errors.password ? (
-           <div className="inline-flex items-start gap-[2px]">
-            <img className="mt-[2px]" src={errorCaptionIcon} alt="" />
-            <InputCaption error={!!form.formState.errors.password}>
-             {form.formState.errors.password?.message}
-            </InputCaption>
-           </div>
+           <ErrorCaption>{form.formState.errors.password.message}</ErrorCaption>
           ) : null}
          </FormItem>
         )}
