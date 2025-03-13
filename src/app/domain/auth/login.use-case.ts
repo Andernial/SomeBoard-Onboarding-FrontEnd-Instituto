@@ -6,7 +6,7 @@ interface UseLoginProps {
  onError?: (error: ApolloError) => void;
 }
 
-function useLogin({ onCompleted, onError }: UseLoginProps) {
+export function useLogin({ onCompleted, onError }: UseLoginProps) {
  const [loginMutation, { loading, error }] = useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, {
   onCompleted,
   onError,
@@ -18,5 +18,3 @@ function useLogin({ onCompleted, onError }: UseLoginProps) {
 
  return { login, loading, error };
 }
-
-export default useLogin;
