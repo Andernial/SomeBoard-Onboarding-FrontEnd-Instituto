@@ -9,12 +9,14 @@ import { registerPageStrings } from './register.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import checkBox from '@/assets/icons/CheckBox.png';
 import checkBoxSelected from '@/assets/icons/Checkbox-Selected.png';
-import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 import { registerFormSchema } from '@atomic/obj.form/zod-schemas/register-form.schema';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
+import { useCreateUser } from '@domain/auth/register.use-case';
+import { useUserStorage } from '@/app/stores/user.store';
+import { useAuthStorage } from '@/app/stores/auth.store';
 
 function RegisterPage() {
  const [reqError, setReqError] = useState('');
@@ -31,10 +33,28 @@ function RegisterPage() {
   },
  });
 
+ const { addUser } = useUserStorage();
+ const { addToken } = useAuthStorage();
+
  const navigate = useNavigate();
 
- const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
-  console.log(values);
+ const { createUserMutation, loading } = useCreateUser({
+  onCompleted: (data) => {
+   const user = data.createUser.user;
+
+   addUser({ name: user.name, id: user.id });
+   addToken(data.createUser.token);
+
+   navigate('/');
+  },
+  onError: (data) => {
+   setReqError(data.message);
+  },
+ });
+
+ const handleSubmit = (values: z.infer<typeof registerFormSchema>) => {
+  const UserInput = { name: values.name, email: values.email, password: values.password };
+  createUserMutation({ variables: { UserInput } });
  };
 
  const handleInputFocus = () => {
