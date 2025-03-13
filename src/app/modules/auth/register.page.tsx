@@ -45,7 +45,7 @@ function RegisterPage() {
    <section className="flex flex-col items-center w-1/2">
     <header className="w-full">
      <LinkButton className="my-md mt-sm ml-sm pl-[0] block w-fit" hasIcon pathname={AuthRoutes.HOME}>
-     {registerPageStrings.backToHome}
+      {registerPageStrings.backToHome}
      </LinkButton>
     </header>
 
@@ -138,7 +138,7 @@ function RegisterPage() {
             onClick={() => field.onChange(!field.value)}
            />
            <B1 className="py-sm">
-            <span>{registerPageStrings.termsOfUse}</span>
+            {registerPageStrings.termsOfUse}
             <LinkButton
              className="mt-xs py-[0px] w-full pr-[3px] pl-[3px] focus:outline-transparent align-middle outline-none active:outline-none"
              pathname="placeholder"
@@ -168,7 +168,7 @@ function RegisterPage() {
         <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
        </div>
        <B1>
-        <span>{registerPageStrings.hasAccountMessage}</span>
+        {registerPageStrings.hasAccountMessage}
         <span>
          <LinkButton
           className="pl-xxs focus:outline-transparent align-middle outline-none active:outline-none"

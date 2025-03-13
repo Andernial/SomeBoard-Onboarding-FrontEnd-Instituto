@@ -125,7 +125,7 @@ function LoginPage() {
         <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
        </div>
        <B1>
-        <span>{loginPageStrings.accountQuestion}</span>
+        {loginPageStrings.accountQuestion}
         <span>
          <LinkButton
           className="px-xxs inline-flex focus:outline-transparent align-middle outline-none active:outline-none"
