@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 type authStore = {
- token: string;
+ token?: string;
  addToken: (token: string) => void;
  removeToken: () => void;
 };
@@ -10,12 +10,12 @@ type authStore = {
 export const useAuthStorage = create<authStore>()(
  persist(
   (set, _get) => ({
-   token: '',
+   token: undefined,
    addToken: (token: string) =>
     set(() => ({
      token,
     })),
-   removeToken: () => set(() => ({ token: '' })),
+   removeToken: () => set(() => ({ token: undefined })),
   }),
   {
    name: 'auth-storage',
