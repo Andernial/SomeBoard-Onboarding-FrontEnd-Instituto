@@ -1,16 +1,17 @@
 import { Button, LinkButton } from '@/atomic/atm.button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import z from 'zod';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { AuthRoutes } from './auth.rotes';
 import { B1, H1, InputCaption, InputLabel } from '@/atomic/atm.typography';
 import { loginPageStrings } from './login.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
-import useLogin from '@domain/auth/login.use-case';
+import { useLogin } from '@domain/auth/login.use-case';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import errorCaptionIcon from '@assets/icons/error-caption.png';
+import z from 'zod';
 
 function LoginPage() {
  const [reqError, setReqError] = useState('');
@@ -25,7 +26,7 @@ function LoginPage() {
 
  const navigate = useNavigate();
 
- const { login, loading } = useLogin({
+ const { loginMutation, loading } = useLogin({
   onCompleted: (data) => {
    navigate('/');
   },
@@ -35,7 +36,8 @@ function LoginPage() {
  });
 
  const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
-  login({ loginData: { email: values.email, password: values.password } });
+  const loginData = { email: values.email, password: values.password };
+  loginMutation({ variables: { loginData } });
  };
 
  const handleInputFocus = () => {
@@ -60,9 +62,15 @@ function LoginPage() {
       <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
        <H1>{loginPageStrings.formTitle}</H1>
        <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
-       <InputCaption className="break-words whitespace-normal text-center w-3/4" error={true}>
-        {reqError}
-       </InputCaption>
+       {reqError ? (
+        <div className="inline-flex items-start gap-[2px]">
+         <img className="mt-[2px]" src={errorCaptionIcon} />
+         <InputCaption className="break-words whitespace-normal" error={true}>
+          {reqError}
+         </InputCaption>
+        </div>
+       ) : null}
+
        <FormField
         control={form.control}
         name="email"
@@ -76,9 +84,12 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          <InputCaption className="text-center" error={!!form.formState.errors.email}>
-           {form.formState.errors.email?.message}
-          </InputCaption>
+          {form.formState.errors.email ? (
+           <div className="inline-flex items-start gap-[2px]">
+            <img className="mt-[2px]" src={errorCaptionIcon} alt="" />
+            <InputCaption error={!!form.formState.errors.email}>{form.formState.errors.email?.message}</InputCaption>
+           </div>
+          ) : null}
          </FormItem>
         )}
        />
@@ -96,9 +107,14 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          <InputCaption className="text-center" error={true}>
-           {form.formState.errors.password?.message}
-          </InputCaption>
+          {form.formState.errors.password ? (
+           <div className="inline-flex items-start gap-[2px]">
+            <img className="mt-[2px]" src={errorCaptionIcon} alt="" />
+            <InputCaption error={!!form.formState.errors.password}>
+             {form.formState.errors.password?.message}
+            </InputCaption>
+           </div>
+          ) : null}
          </FormItem>
         )}
        />
