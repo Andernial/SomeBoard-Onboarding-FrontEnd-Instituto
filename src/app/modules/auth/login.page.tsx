@@ -61,7 +61,7 @@ function LoginPage() {
    <section className="flex flex-col items-center w-1/2">
     <header className="w-full">
      <LinkButton className="my-md mt-sm ml-sm pl-[0] block w-fit" hasIcon pathname={AuthRoutes.HOME}>
-      Voltar para o início
+      {loginPageStrings.backToHome}
      </LinkButton>
     </header>
 

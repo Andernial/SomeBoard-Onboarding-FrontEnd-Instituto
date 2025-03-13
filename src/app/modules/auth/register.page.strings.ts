@@ -5,6 +5,7 @@ export const registerPageStrings = {
     termsOfUseLink: 'Termos de Uso',
     login: 'Faça o login!',
     privacyTerms: 'Política de Privacidade',
+    backToHome: 'Voltar Para O Início',
     submit: 'Cadastrar',
     hasAccountMessage: 'Já possui uma conta?',
     labels:{
