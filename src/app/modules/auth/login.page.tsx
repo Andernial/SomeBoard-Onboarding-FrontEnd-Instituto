@@ -1,15 +1,22 @@
 import { Button, LinkButton } from '@/atomic/atm.button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import z from 'zod';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { AuthRoutes } from './auth.rotes';
-import { B1, H1, InputCaption, InputLabel } from '@/atomic/atm.typography';
+import { B1, H1, InputLabel } from '@/atomic/atm.typography';
 import { loginPageStrings } from './login.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
+import { useLogin } from '@domain/auth/login.use-case';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+import z from 'zod';
+import { ErrorCaption } from '@atomic/atm.error-caption';
 
 function LoginPage() {
+ const [reqError, setReqError] = useState<string>();
+
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
   defaultValues: {
@@ -18,8 +25,24 @@ function LoginPage() {
   },
  });
 
+ const navigate = useNavigate();
+
+ const { loginMutation, loading } = useLogin({
+  onCompleted: (data) => {
+   navigate('/');
+  },
+  onError: (data) => {
+   setReqError(data.message);
+  },
+ });
+
  const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
-  console.log(values);
+  const loginData = { email: values.email, password: values.password };
+  loginMutation({ variables: { loginData } });
+ };
+
+ const handleInputFocus = () => {
+  setReqError('');
  };
 
  return (
@@ -32,16 +55,22 @@ function LoginPage() {
     </header>
 
     <Form {...form}>
-     <form className="h-full flex items-center justify-center" onSubmit={form.handleSubmit(handleSubmit)}>
+     <form
+      className="h-full flex items-center justify-center"
+      onSubmit={form.handleSubmit(handleSubmit)}
+      onChange={handleInputFocus}
+     >
       <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
        <H1>{loginPageStrings.formTitle}</H1>
        <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
+       {reqError ? <ErrorCaption>{reqError}</ErrorCaption> : null}
+
        <FormField
         control={form.control}
         name="email"
         render={({ field }) => (
          <FormItem>
-          <InputLabel className='my-xxs'>{loginPageStrings.labels.email}</InputLabel>
+          <InputLabel className="my-xxs">{loginPageStrings.labels.email}</InputLabel>
           <FormControl>
            <TextInput
             error={!!form.formState.errors.email}
@@ -49,7 +78,7 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          <InputCaption error={!!form.formState.errors.email}>{form.formState.errors.email?.message}</InputCaption>
+          {form.formState.errors.email ? <ErrorCaption>{form.formState.errors.email.message}</ErrorCaption> : null}
          </FormItem>
         )}
        />
@@ -67,14 +96,16 @@ function LoginPage() {
             {...field}
            />
           </FormControl>
-          <InputCaption error={true}>{form.formState.errors.password?.message}</InputCaption>
+          {form.formState.errors.password ? (
+           <ErrorCaption>{form.formState.errors.password.message}</ErrorCaption>
+          ) : null}
          </FormItem>
         )}
        />
        <LinkButton className="self-end mt-xs" pathname="placeholder">
         {loginPageStrings.forgotMessage}
        </LinkButton>
-       <Button type="submit" className="w-full mt-md" color="primary">
+       <Button type="submit" className="w-full mt-md" color="primary" disabled={!!loading}>
         Entrar
        </Button>
        <div className="flex items-center w-full pt-xs">

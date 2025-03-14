@@ -12,9 +12,5 @@ export function useLogin({ onCompleted, onError }: UseLoginProps) {
   onError,
  });
 
- const login = (variables: LoginMutationVariables) => {
-  return loginMutation({ variables });
- };
-
- return { login, loading, error };
+ return { loginMutation, loading, error };
 }
