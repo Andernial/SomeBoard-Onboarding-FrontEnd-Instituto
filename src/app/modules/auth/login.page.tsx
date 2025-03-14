@@ -10,12 +10,17 @@ import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema
 import { useLogin } from '@domain/auth/login.use-case';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
-import z from 'zod';
 import { ErrorCaption } from '@atomic/atm.error-caption';
+import { useUserStorage } from '@/app/stores/user.store';
+import { useAuthStorage } from '@/app/stores/auth.store';
+import z from 'zod';
+
 
 function LoginPage() {
  const [reqError, setReqError] = useState<string>();
+
+ const { addUser } = useUserStorage();
+ const { addToken } = useAuthStorage();
 
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
@@ -29,6 +34,11 @@ function LoginPage() {
 
  const { loginMutation, loading } = useLogin({
   onCompleted: (data) => {
+   const user = data.login.user;
+
+   addUser({ name: user.name, id: user.id });
+   addToken(data.login.token);
+
    navigate('/');
   },
   onError: (data) => {
