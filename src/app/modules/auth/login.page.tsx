@@ -15,7 +15,7 @@ import z from 'zod';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 
 function LoginPage() {
- const [reqError, setReqError] = useState('');
+ const [reqError, setReqError] = useState<string>();
 
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
