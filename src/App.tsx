@@ -6,6 +6,7 @@ import ErrorPage from './app/modules/auth/error.page';
 import './index.css';
 import HomePage from './app/modules/home/home.page';
 import RegisterPage from './app/modules/auth/register.page';
+import { AuthGuard } from './app/guards/auth-guard';
 
 const router = createBrowserRouter([
  {
@@ -14,12 +15,12 @@ const router = createBrowserRouter([
   errorElement: <ErrorPage />,
  },
  {
-    path: AuthRoutes.REGISTER,
-    element: <RegisterPage />,
-   },
+  path: AuthRoutes.REGISTER,
+  element: <RegisterPage />,
+ },
  {
-  path: AuthRoutes.HOME,
-  element: <HomePage />,
+  element: <AuthGuard />,
+  children: [{ path: AuthRoutes.HOME, element: <HomePage /> }],
  },
 ]);
 
