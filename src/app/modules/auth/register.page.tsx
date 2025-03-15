@@ -59,7 +59,7 @@ function RegisterPage() {
      <div className="flex flex-col items-center w-[400px] max-h-svh px-xs ">
       <H1>{registerPageStrings.formTitle}</H1>
       <B1 className="text-center pt-xxs pb-md">{registerPageStrings.formSubTitle}</B1>
-      {reqError ? <ErrorCaption>{reqError}</ErrorCaption> : null}
+      {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
       <FormField
        control={form.control}
        name="name"
@@ -140,7 +140,7 @@ function RegisterPage() {
            {registerPageStrings.termsOfUse}
            <LinkButton
             style="linkSecondary"
-            className="mt-xs py-[0px] w-full pr-xxs pl-xxs align-middle"
+            className="mt-xs py-[0px] w-full pr-[3px] pl-[3px] align-middle"
             pathname="placeholder"
            >
             {registerPageStrings.termsOfUseLink}
@@ -148,7 +148,7 @@ function RegisterPage() {
            <span>e</span>
            <LinkButton
             style="linkSecondary"
-            className="mt-xs py-[0px] pr-xxs pl-xxs align-middle"
+            className="mt-xs py-[0px] pr-[3px] pl-[3px] align-middle"
             pathname="placeholder"
            >
             {registerPageStrings.privacyTerms}
