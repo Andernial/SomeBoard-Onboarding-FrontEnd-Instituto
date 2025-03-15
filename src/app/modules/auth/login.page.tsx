@@ -128,8 +128,9 @@ function LoginPage() {
         {loginPageStrings.accountQuestion}
         <span>
          <LinkButton
-          className="px-xxs inline-flex focus:outline-transparent align-middle outline-none active:outline-none"
+          className="px-xxs"
           pathname={AuthRoutes.REGISTER}
+          style='linkSecondary'
          >
           {loginPageStrings.register}
          </LinkButton>

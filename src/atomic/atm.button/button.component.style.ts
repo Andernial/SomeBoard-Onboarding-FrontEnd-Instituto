@@ -20,6 +20,8 @@ export const button = tv(
    style: {
     link:
      'bg-transparent text-brand-primary-dark hover:decoration-from-font hover:underline focus:outline-brand-primary-dark active:text-brand-accessory-magenta active:outline-none',
+    linkSecondary:
+     'bg-transparent focus:outline-transparent align-middle outline-none active:outline-none text-brand-primary-dark hover:decoration-from-font hover:underline  active:text-brand-accessory-magenta',
    },
 
    disabled: {
@@ -34,6 +36,11 @@ export const button = tv(
   compoundVariants: [
    {
     style: 'link',
+    color: 'primary',
+    className: 'bg-transparent hover:bg-trasparent active:bg-transparent',
+   },
+   {
+    style: 'linkSecondary',
     color: 'primary',
     className: 'bg-transparent hover:bg-trasparent active:bg-transparent',
    },
