@@ -10,7 +10,7 @@ interface ApiGraphqlError extends GraphQLFormattedError {
 
 export const errorLink = onError(({ graphQLErrors }) => {
  const { token, removeToken } = useAuthStorage.getState();
- const { removeUser } = useUserStorage.getInitialState();
+ const { removeUser } = useUserStorage.getState();
 
  if (graphQLErrors) {
   graphQLErrors.forEach((error: ApiGraphqlError) => {
