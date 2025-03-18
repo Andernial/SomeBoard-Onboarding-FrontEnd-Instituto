@@ -1,7 +1,7 @@
 import { Button, LinkButton } from '@/atomic/atm.button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { AuthRoutes } from './auth.rotes';
 import { B1, H1, InputLabel } from '@/atomic/atm.typography';
 import { loginPageStrings } from './login.page.strings';
@@ -11,16 +11,12 @@ import { useLogin } from '@domain/auth/login.use-case';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ErrorCaption } from '@atomic/atm.error-caption';
-import { useUserStorage } from '@/app/stores/user.store';
-import { useAuthStorage } from '@/app/stores/auth.store';
-import z from 'zod';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
+import z from 'zod';
+
 
 function LoginPage() {
  const [reqError, setReqError] = useState<string>();
-
- const { addUser } = useUserStorage();
- const { addToken } = useAuthStorage();
 
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
@@ -35,11 +31,6 @@ function LoginPage() {
 
  const { loginMutation, loading } = useLogin({
   onCompleted: (data) => {
-   const user = data.login.user;
-
-   addUser({ name: user.name, id: user.id });
-   addToken(data.login.token);
-
    navigate('/');
   },
   onError: (data) => {
@@ -74,7 +65,7 @@ function LoginPage() {
      <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
       <H1>{loginPageStrings.formTitle}</H1>
       <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
-      {reqError ? <ErrorCaption className='w-11/12'>{reqError}</ErrorCaption> : null}
+      {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
 
       <FormField
        control={form.control}

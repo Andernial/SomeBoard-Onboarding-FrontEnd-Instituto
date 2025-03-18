@@ -15,8 +15,6 @@ import { ErrorCaption } from '@atomic/atm.error-caption';
 import { registerFormSchema } from '@atomic/obj.form/zod-schemas/register-form.schema';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
 import { useCreateUser } from '@domain/auth/register.use-case';
-import { useUserStorage } from '@/app/stores/user.store';
-import { useAuthStorage } from '@/app/stores/auth.store';
 
 function RegisterPage() {
  const [reqError, setReqError] = useState('');
@@ -33,18 +31,10 @@ function RegisterPage() {
   },
  });
 
- const { addUser } = useUserStorage();
- const { addToken } = useAuthStorage();
-
  const navigate = useNavigate();
 
  const { createUserMutation, loading } = useCreateUser({
   onCompleted: (data) => {
-   const user = data.createUser.user;
-
-   addUser({ name: user.name, id: user.id });
-   addToken(data.createUser.token);
-
    navigate('/');
   },
   onError: (data) => {
