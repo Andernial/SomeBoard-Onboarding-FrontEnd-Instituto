@@ -18,9 +18,7 @@ export function useLogin({ onCompleted, onError }: UseLoginProps) {
    addUser({ name: user.name, id: user.id });
    addToken(data.login.token);
 
-   if (onCompleted) {
-    onCompleted(data);
-   }
+   onCompleted?.(data);
   },
   onError,
  });
