@@ -10,7 +10,6 @@ export function KanbanPage() {
   <div className="bg-grayScale-xlight h-svh flex justify-center items-center text-start">
    <section>
     <H1 className="text-start pt-lg ">{kanbanStrings.title}</H1>
-
     <div className="bg-grayScale-white w-[1156px] min-h-[343px pb-xl pt-xl mt-md flex flex-col justify-center items-center">
     {placeholders.length ? (
      placeholders.map((item) => <p>{item}</p>)
@@ -21,7 +20,7 @@ export function KanbanPage() {
       <B1 className="pt-xxs">{kanbanStrings.emptyState.subTitle}</B1>
       <Button color="cta" className="mt-sm">
        {kanbanStrings.createButton}
-      </Button>{' '}
+      </Button>
      </>
     )}
     </div>
