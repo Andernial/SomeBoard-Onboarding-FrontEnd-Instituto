@@ -9,6 +9,7 @@ import RegisterPage from './app/modules/auth/register.page';
 import { AuthGuard } from './app/guards/auth-guard';
 import { LoggedLayout } from './app/modules/layout/logged.layout';
 import { BoardPage } from './app/modules/board/board.page';
+import { KanbanPage } from './app/modules/kanban/kanban.page';
 
 const router = createBrowserRouter([
  {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
     children: [
      { path: AuthRoutes.HOME, element: <HomePage /> },
      { path: AuthRoutes.BOARD, element: <BoardPage /> },
+     { path: AuthRoutes.KANBAN, element: <KanbanPage /> },
     ],
    },
   ],

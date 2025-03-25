@@ -22,9 +22,9 @@ export function LoggedLayout() {
  return (
   <div className="w-full h-full">
    <header className="w-full h-[64px] bg-grayScale-white flex justify-around items-center gap-xl absolute  select-none">
-    <img src={logo} alt="logo" className="size-lg" />
+    <img src={logo} alt="logo" className="size-lg mr-xl" />
     <div>
-     <img className="inline-flex m-xxs" src={placeholderProfile} alt="profile-image" />
+     <img className="inline-flex mr-xxs ml-xl" src={placeholderProfile} alt="profile-image" />
      <Link>{name}</Link>
      <DropDownMenu>
       <DropdownMenuContent className="bg-grayScale-white p-xxs text-center border border-grayScale-xxdark rounded-xs select-none">
