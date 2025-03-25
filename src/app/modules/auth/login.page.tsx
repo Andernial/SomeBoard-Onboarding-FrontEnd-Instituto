@@ -14,7 +14,7 @@ import { ErrorCaption } from '@atomic/atm.error-caption';
 import { useUserStorage } from '@/app/stores/user.store';
 import { useAuthStorage } from '@/app/stores/auth.store';
 import z from 'zod';
-
+import { FormAtm } from '@atomic/obj.form/atm.form.component';
 
 function LoginPage() {
  const [reqError, setReqError] = useState<string>();
@@ -24,6 +24,7 @@ function LoginPage() {
 
  const form = useForm<z.infer<typeof loginFormSchema>>({
   resolver: zodResolver(loginFormSchema),
+  mode: 'onChange',
   defaultValues: {
    password: '',
    email: '',
@@ -60,83 +61,80 @@ function LoginPage() {
    <section className="flex flex-col items-center w-1/2">
     <header className="w-full">
      <LinkButton className="my-md mt-sm ml-sm pl-[0] block w-fit" hasIcon pathname={AuthRoutes.HOME}>
-      Voltar para o início
+      {loginPageStrings.backToHome}
      </LinkButton>
     </header>
 
-    <Form {...form}>
-     <form
-      className="h-full flex items-center justify-center"
-      onSubmit={form.handleSubmit(handleSubmit)}
-      onChange={handleInputFocus}
-     >
-      <div className="flex flex-col items-center w-[400px] h-max[478px] px-sm pt-md">
-       <H1>{loginPageStrings.formTitle}</H1>
-       <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
-       {reqError ? <ErrorCaption>{reqError}</ErrorCaption> : null}
+    <FormAtm
+     form={form}
+     className="h-full flex items-center justify-center"
+     onSubmit={form.handleSubmit(handleSubmit)}
+     onChange={handleInputFocus}
+    >
+     <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
+      <H1>{loginPageStrings.formTitle}</H1>
+      <B1 className="text-center pt-xxs pb-md">{loginPageStrings.formSubtitle}</B1>
+      {reqError ? <ErrorCaption className='w-11/12'>{reqError}</ErrorCaption> : null}
 
-       <FormField
-        control={form.control}
-        name="email"
-        render={({ field }) => (
-         <FormItem>
-          <InputLabel className="my-xxs">{loginPageStrings.labels.email}</InputLabel>
-          <FormControl>
-           <TextInput
-            error={!!form.formState.errors.email}
-            placeholder={loginPageStrings.placeHolders.email}
-            {...field}
-           />
-          </FormControl>
-          {form.formState.errors.email ? <ErrorCaption>{form.formState.errors.email.message}</ErrorCaption> : null}
-         </FormItem>
-        )}
-       />
-       <FormField
-        control={form.control}
-        name="password"
-        render={({ field }) => (
-         <FormItem>
-          <InputLabel className="my-xxs">{loginPageStrings.labels.password}</InputLabel>
-          <FormControl>
-           <PasswordInput
-            error={!!form.formState.errors.password}
-            className="w-full "
-            placeholder={loginPageStrings.placeHolders.password}
-            {...field}
-           />
-          </FormControl>
-          {form.formState.errors.password ? (
-           <ErrorCaption>{form.formState.errors.password.message}</ErrorCaption>
-          ) : null}
-         </FormItem>
-        )}
-       />
-       <LinkButton className="self-end mt-xs" pathname="placeholder">
-        {loginPageStrings.forgotMessage}
-       </LinkButton>
-       <Button type="submit" className="w-full mt-md" color="primary" disabled={!!loading}>
-        Entrar
-       </Button>
-       <div className="flex items-center w-full pt-xs">
-        <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
-        <span className="px-sm">ou</span>
-        <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
-       </div>
-       <B1>
-        <span>{loginPageStrings.accountQuestion}</span>
-        <span>
-         <LinkButton className="px-xxs inline-flex" pathname="placeholder">
-          {loginPageStrings.register}
-         </LinkButton>
-        </span>
-       </B1>
+      <FormField
+       control={form.control}
+       name="email"
+       render={({ field }) => (
+        <FormItem>
+         <InputLabel className="my-xxs">{loginPageStrings.labels.email}</InputLabel>
+         <FormControl>
+          <TextInput
+           error={!!form.formState.errors.email}
+           placeholder={loginPageStrings.placeHolders.email}
+           {...field}
+          />
+         </FormControl>
+         {form.formState.errors.email ? <ErrorCaption>{form.formState.errors.email.message}</ErrorCaption> : null}
+        </FormItem>
+       )}
+      />
+      <FormField
+       control={form.control}
+       name="password"
+       render={({ field }) => (
+        <FormItem>
+         <InputLabel className="my-xxs">{loginPageStrings.labels.password}</InputLabel>
+         <FormControl>
+          <PasswordInput
+           error={!!form.formState.errors.password}
+           className="w-full "
+           placeholder={loginPageStrings.placeHolders.password}
+           {...field}
+          />
+         </FormControl>
+         {form.formState.errors.password ? <ErrorCaption>{form.formState.errors.password.message}</ErrorCaption> : null}
+        </FormItem>
+       )}
+      />
+      <LinkButton className="self-end mt-md" pathname="placeholder">
+       {loginPageStrings.forgotMessage}
+      </LinkButton>
+      <Button type="submit" className="w-full mt-md" color="primary" disabled={!!loading}>
+       Entrar
+      </Button>
+      <div className="flex items-center w-full pt-xs">
+       <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
+       <span className="px-sm">ou</span>
+       <hr className="flex-grow border-t border-grayScale-xlight border-dashed" />
       </div>
-     </form>
-    </Form>
+      <B1>
+       {loginPageStrings.accountQuestion}
+       <span>
+        <LinkButton className="px-xxs" pathname={AuthRoutes.REGISTER} style="linkSecondary">
+         {loginPageStrings.register}
+        </LinkButton>
+       </span>
+      </B1>
+     </div>
+    </FormAtm>
    </section>
 
-   <section className="w-1/2 h-svh flex justify-end bg-guina bg-cover bg-center bg-no-repeat"></section>
+   <section className="w-1/2 flex justify-end bg-guina bg-no-repeat bg-center "></section>
   </div>
  );
 }

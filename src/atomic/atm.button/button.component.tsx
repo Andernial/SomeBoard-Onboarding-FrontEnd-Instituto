@@ -22,9 +22,9 @@ export function Button({ color, disabled, children, ...props }: ButtonProps) {
 
 const { icon } = buttonIcon();
 
-export function LinkButton({ disabled, children, pathname, search, hash, className, hasIcon }: LinkButtonProps) {
+export function LinkButton({ disabled, children, pathname, search, hash, className, hasIcon, style }: LinkButtonProps) {
  return (
-  <Link to={{ pathname, search, hash }} className={button({ style: 'link', className, disabled })}>
+  <Link to={{ pathname, search, hash }} className={button({ style: style ?? 'link', className, disabled })}>
    {hasIcon && <img className={`${icon()} mr-2`} src={arrowIcon} />}
    {children}
   </Link>

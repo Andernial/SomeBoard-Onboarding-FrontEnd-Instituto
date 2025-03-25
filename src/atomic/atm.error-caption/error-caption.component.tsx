@@ -8,7 +8,7 @@ interface ErrorCaptionProps {
 
 export function ErrorCaption({ children, className }: ErrorCaptionProps) {
  return (
-  <div className="inline-flex items-start gap-[2px]">
+  <div className="inline-flex items-start gap-xxs">
    <img className="mt-[2px]" src={errorCaptionIcon} alt="" />
    <InputCaption error={true} className={className}>
     {children}
