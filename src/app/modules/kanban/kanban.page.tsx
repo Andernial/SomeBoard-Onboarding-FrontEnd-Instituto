@@ -10,7 +10,7 @@ export function KanbanPage() {
   <div className="bg-grayScale-xlight h-svh flex justify-center items-center text-start">
    <section>
     <H1 className="text-start pt-lg ">{kanbanStrings.title}</H1>
-    <div className="bg-grayScale-white w-[1156px] min-h-[343px pb-xl pt-xl mt-md flex flex-col justify-center items-center">
+    <div className="bg-grayScale-white w-[1156px] min-h-[343px pb-xl pt-xl mt-md flex flex-col justify-center items-center rounded-md">
     {placeholders.length ? (
      placeholders.map((item) => <p>{item}</p>)
     ) : (
