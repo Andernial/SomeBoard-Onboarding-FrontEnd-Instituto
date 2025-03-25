@@ -9,12 +9,12 @@ import { registerPageStrings } from './register.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
 import checkBox from '@/assets/icons/CheckBox.png';
 import checkBoxSelected from '@/assets/icons/Checkbox-Selected.png';
-import { loginFormSchema } from '@/atomic/obj.form/zod-schemas/login-form-schema';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 import { registerFormSchema } from '@atomic/obj.form/zod-schemas/register-form.schema';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
+import { useCreateUser } from '@domain/auth/register.use-case';
 
 function RegisterPage() {
  const [reqError, setReqError] = useState('');
@@ -33,8 +33,18 @@ function RegisterPage() {
 
  const navigate = useNavigate();
 
- const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
-  console.log(values);
+ const { createUserMutation, loading } = useCreateUser({
+  onCompleted: (data) => {
+   navigate('/');
+  },
+  onError: (data) => {
+   setReqError(data.message);
+  },
+ });
+
+ const handleSubmit = (values: z.infer<typeof registerFormSchema>) => {
+  const UserInput = { name: values.name, email: values.email, password: values.password };
+  createUserMutation({ variables: { UserInput } });
  };
 
  const handleInputFocus = () => {
@@ -54,9 +64,9 @@ function RegisterPage() {
      form={form}
      onSubmit={handleSubmit}
      onChange={handleInputFocus}
-     className="h-full flex items-center justify-center "
+     className="h-full flex items-center justify-center"
     >
-     <div className="flex flex-col items-center w-[400px] max-h-svh px-xs ">
+     <div className="flex flex-col items-center w-[400px] max-h-svh px-xs pt-lg">
       <H1>{registerPageStrings.formTitle}</H1>
       <B1 className="text-center pt-xxs pb-md">{registerPageStrings.formSubTitle}</B1>
       {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
@@ -160,7 +170,7 @@ function RegisterPage() {
        )}
       />
 
-      <Button type="submit" className="w-full mt-md" color="primary">
+      <Button type="submit" className="w-full mt-md" color="primary" disabled={loading}>
        {registerPageStrings.submit}
       </Button>
       <div className="flex items-center w-full pt-xs">
