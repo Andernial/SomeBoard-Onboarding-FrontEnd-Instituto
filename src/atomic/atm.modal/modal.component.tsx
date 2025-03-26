@@ -16,7 +16,7 @@ export function Modal({ isOpen, onClose, children }: modalProps) {
  return createPortal(
   <>
    <div
-    className="fixed flex justify-center items-center inset-[0px] min-h-svh min-w-full w-full h-full bg-grayScale-xdark bg-opacity-50  z-10"
+    className="fixed flex justify-center items-center inset-[0px] min-h-svh w-full bg-grayScale-xdark bg-opacity-50  z-10"
     onClick={() => onClose()}
    />
 
