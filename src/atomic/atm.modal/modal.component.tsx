@@ -9,7 +9,8 @@ interface modalProps {
 }
 
 export function Modal({ isOpen, onClose, children }: modalProps) {
- if (!isOpen) {
+ const modalPortal = document.getElementById('modal-portal');
+ if (!isOpen || !modalPortal) {
   return null;
  }
 
@@ -27,6 +28,6 @@ export function Modal({ isOpen, onClose, children }: modalProps) {
     {children}
    </div>
   </>,
-  document.body,
+  modalPortal,
  );
 }
