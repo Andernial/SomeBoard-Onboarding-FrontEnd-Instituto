@@ -5,6 +5,7 @@ import arrowIcon from '@assets/icons/Arrow.png';
 
 interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'style'>, ButtonVariants {
  children: React.ReactNode;
+ classname?: string;
 }
 
 interface LinkButtonProps extends ButtonVariants {
@@ -16,8 +17,12 @@ interface LinkButtonProps extends ButtonVariants {
  hasIcon?: boolean;
 }
 
-export function Button({ color, disabled, children, ...props }: ButtonProps) {
- return <button className={button({ color, disabled, ...props })}>{children}</button>;
+export function Button({ color, disabled, children, style, className, ...props }: ButtonProps) {
+ return (
+  <button className={button({ color, style, className, ...props })} {...props}>
+   {children}
+  </button>
+ );
 }
 
 const { icon } = buttonIcon();
