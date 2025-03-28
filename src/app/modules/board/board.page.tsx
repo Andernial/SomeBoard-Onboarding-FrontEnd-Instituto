@@ -1,7 +1,7 @@
-export function HomePage() {
+export function BoardPage() {
  return (
   <div className="bg-grayScale-xlight h-svh flex justify-center items-center">
-   <h1>placeholder home</h1>
+   <h1>placeholder board</h1>
   </div>
  );
 }

@@ -4,9 +4,11 @@ import { AuthRoutes } from './app/modules/auth/auth.rotes';
 import LoginPage from './app/modules/auth/login.page';
 import ErrorPage from './app/modules/auth/error.page';
 import './index.css';
-import HomePage from './app/modules/home/home.page';
+import { HomePage } from './app/modules/home/home.page';
 import RegisterPage from './app/modules/auth/register.page';
 import { AuthGuard } from './app/guards/auth-guard';
+import { LoggedLayout } from './app/modules/layout/logged.layout';
+import { BoardPage } from './app/modules/board/board.page';
 
 const router = createBrowserRouter([
  {
@@ -20,7 +22,16 @@ const router = createBrowserRouter([
  },
  {
   element: <AuthGuard />,
-  children: [{ path: AuthRoutes.HOME, element: <HomePage /> }],
+  children: [
+   {
+    path: AuthRoutes.HOME,
+    element: <LoggedLayout />,
+    children: [
+     { path: AuthRoutes.HOME, element: <HomePage /> },
+     { path: AuthRoutes.BOARD, element: <BoardPage /> },
+    ],
+   },
+  ],
  },
 ]);
 
