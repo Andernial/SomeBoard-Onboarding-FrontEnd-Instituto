@@ -31,7 +31,6 @@ export function KanbanPage() {
 
  const { createBoardMutation, loading } = useCreateBoard({
   onCompleted: (data) => {
-   console.log(data);
    handleSucess();
   },
   onError: (data) => {
@@ -50,7 +49,7 @@ export function KanbanPage() {
   setTimeout(() => {
    setIsModalOpen(false);
    setReqSucess(false);
-  }, 5000);
+  }, 2500);
  };
 
  const handleInputFocus = () => {
