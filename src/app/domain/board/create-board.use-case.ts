@@ -21,7 +21,6 @@ export function useCreateBoard({ onCompleted, onError }: UseBoardProps) {
     cache.modify({
      fields: {
       boards(existingBoards = {}) {
-       console.log(existingBoards);
        const newBoardRef = cache.writeFragment({
         data: data?.createBoard,
         fragment: gql`
