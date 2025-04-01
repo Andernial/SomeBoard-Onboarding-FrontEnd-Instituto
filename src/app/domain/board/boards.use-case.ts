@@ -8,11 +8,13 @@ interface UseBoardProps {
 }
 
 export function useBoards({ onCompleted, onError, variables }: UseBoardProps) {
- const { data, loading, error } = useQuery<BoardsQuery, BoardsQueryVariables>(BoardsDocument, {
+ const { data, loading, error, refetch } = useQuery<BoardsQuery, BoardsQueryVariables>(BoardsDocument, {
   onCompleted,
   onError,
   variables,
+  fetchPolicy: 'network-only',
+  nextFetchPolicy: 'cache-first',
  });
 
- return { data, loading, error };
+ return { data, loading, error, refetch };
 }

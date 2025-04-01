@@ -2,6 +2,9 @@ export const kanbanStrings = {
  title: 'Todos os projetos',
  createButton: 'Criar projeto',
  sucessCreated: 'Projeto criado com sucesso!',
+ createdAt: 'Criado em xx/xx/xxxx',
+ next: 'Próximo',
+ previous: 'Anterior',
  createModal: {
   title: 'Crie um novo projeto!',
   create: 'Criar',

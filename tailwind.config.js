@@ -13,6 +13,7 @@ export default withTV({
 
   backgroundImage: {
    guina: "url('./src/assets/images/guina.jpeg')",
+   'card-placeholder': "url('./src/assets/images/card-placeholder.png')"
   },
 
   fontFamily: {
