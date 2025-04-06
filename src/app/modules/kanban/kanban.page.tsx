@@ -13,11 +13,12 @@ import { projectFormSchema } from '@atomic/obj.form/zod-schemas/project-form-sch
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBoards } from '@domain/board/boards.use-case';
 import { Card } from '@atomic/atm.card';
+import { BoardsDocument } from '@data/graphql/generated/graphql';
+import { CardSkeleton } from '@atomic/atm.card/card.skeleton';
 import z from 'zod';
 import sucessIcon from '@assets/icons/sucess.png';
 import emptyPlaceholder from '@assets/images/Empty-State.png';
 import addIcon from '@assets/icons/add.png';
-import { BoardsDocument } from '@data/graphql/generated/graphql';
 
 export function KanbanPage() {
  const [reqError, setReqError] = useState<string>();
@@ -33,7 +34,7 @@ export function KanbanPage() {
   },
  });
 
- const { createBoardMutation, loading } = useCreateBoard({
+ const { createBoardMutation } = useCreateBoard({
   onCompleted: (data) => {
    setOffSet(0);
    handleSucess();
@@ -62,6 +63,10 @@ export function KanbanPage() {
       boards: {
        ...existing.boards,
        nodes: [newBoard, ...existing.boards.nodes].slice(0, 7),
+       pageInfo: {
+        ...existing.boards.pageInfo,
+        hasNextPage: existing.boards.nodes.length === 7 ? true : existing.boards.pageInfo.hasNextPage,
+       },
       },
      };
     },
@@ -71,7 +76,7 @@ export function KanbanPage() {
 
  const limit = 7;
 
- const { data } = useBoards({
+ const { data, loading } = useBoards({
   onCompleted: (data) => {},
   onError: (data) => {},
   variables: {
@@ -108,75 +113,81 @@ export function KanbanPage() {
    <div className="w-4/5">
     <H1 className="pt-lg">{kanbanStrings.title}</H1>
    </div>
+
    <div className="bg-grayScale-white py-lg  my-md flex flex-wrap justify-center w-4/5 items-stretch  gap-sm rounded-md">
-    {data?.boards.nodes?.length ? (
-     data.boards.nodes.map((board, index) => (
-      <React.Fragment key={index}>
-       <Card>
-        <H1 className="px-sm pt-sm overflow-hidden text-ellipsis whitespace-nowrap">{board.name}</H1>
-        <B1 className="pt-xxs px-sm pb-lg">{kanbanStrings.createdAt}</B1>
-       </Card>
-       {index + 1 === data.boards.nodes.length ? (
-        <div
-         className="w-1/5  flex justify-center items-center gap-xxs flex-col border-2 border-grayScale-light rounded-sm cursor-pointer"
-         onClick={() => setIsModalOpen(true)}
-        >
-         <img src={addIcon} className="size-sm" />
-         <Link>{kanbanStrings.createButton}</Link>
-        </div>
-       ) : null}
-      </React.Fragment>
-     ))
+    {loading ? (
+     Array.from({ length: 4 }).map((_unused, index) => <CardSkeleton key={index} />)
     ) : (
-     <div className="h-full w-full py-lg flex flex-col justify-center items-center rounded-md">
-      <img src={emptyPlaceholder} />
-      <H3 className="pt-sm">{kanbanStrings.emptyState.title}</H3>
-      <B1 className="pt-xxs">{kanbanStrings.emptyState.subTitle}</B1>
-      <Button color="cta" className="mt-sm" onClick={() => setIsModalOpen(true)}>
-       {kanbanStrings.createButton}
-      </Button>
-     </div>
+     <>
+      {data?.boards.nodes?.length ? (
+       data.boards.nodes.map((board, index) => (
+        <React.Fragment key={index}>
+         <Card>
+          <H1 className="px-sm pt-sm overflow-hidden text-ellipsis whitespace-nowrap">{board.name}</H1>
+          <B1 className="pt-xxs px-sm pb-lg">{kanbanStrings.createdAt}</B1>
+         </Card>
+         {index + 1 === data.boards.nodes.length ? (
+          <div
+           className="w-1/5  flex justify-center items-center gap-xxs flex-col border-2 border-grayScale-light rounded-sm cursor-pointer"
+           onClick={() => setIsModalOpen(true)}
+          >
+           <img src={addIcon} className="size-sm" />
+           <Link>{kanbanStrings.createButton}</Link>
+          </div>
+         ) : null}
+        </React.Fragment>
+       ))
+      ) : (
+       <div className="h-full w-full py-lg flex flex-col justify-center items-center rounded-md">
+        <img src={emptyPlaceholder} />
+        <H3 className="pt-sm">{kanbanStrings.emptyState.title}</H3>
+        <B1 className="pt-xxs">{kanbanStrings.emptyState.subTitle}</B1>
+        <Button color="cta" className="mt-sm" onClick={() => setIsModalOpen(true)}>
+         {kanbanStrings.createButton}
+        </Button>
+       </div>
+      )}
+      <Modal isOpen={isModalOpen} onClose={() => handleModalClose()}>
+       <FormAtm
+        form={form}
+        className="h-full flex items-center justify-center"
+        onSubmit={form.handleSubmit(handleSubmit)}
+        onChange={handleInputFocus}
+       >
+        <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
+         <H1>{!reqSucess ? kanbanStrings.createModal.title : kanbanStrings.sucessCreated}</H1>
+         <img src={!reqSucess ? emptyPlaceholder : sucessIcon} alt="placeholder" className="p-sm" />
+         {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
+
+         {!reqSucess ? (
+          <>
+           <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+             <FormItem>
+              <InputLabel className="my-xxs">{kanbanStrings.createModal.labels.name}</InputLabel>
+              <FormControl>
+               <TextInput
+                error={!!form.formState.errors.name}
+                placeholder={kanbanStrings.createModal.labels.name}
+                {...field}
+               />
+              </FormControl>
+              {form.formState.errors.name ? <ErrorCaption>{form.formState.errors.name.message}</ErrorCaption> : null}
+             </FormItem>
+            )}
+           />
+           <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
+            {kanbanStrings.createModal.create}
+           </Button>
+          </>
+         ) : null}
+        </div>
+       </FormAtm>
+      </Modal>
+     </>
     )}
-
-    <Modal isOpen={isModalOpen} onClose={() => handleModalClose()}>
-     <FormAtm
-      form={form}
-      className="h-full flex items-center justify-center"
-      onSubmit={form.handleSubmit(handleSubmit)}
-      onChange={handleInputFocus}
-     >
-      <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
-       <H1>{!reqSucess ? kanbanStrings.createModal.title : kanbanStrings.sucessCreated}</H1>
-       <img src={!reqSucess ? emptyPlaceholder : sucessIcon} alt="placeholder" className="p-sm" />
-       {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
-
-       {!reqSucess ? (
-        <>
-         <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-           <FormItem>
-            <InputLabel className="my-xxs">{kanbanStrings.createModal.labels.name}</InputLabel>
-            <FormControl>
-             <TextInput
-              error={!!form.formState.errors.name}
-              placeholder={kanbanStrings.createModal.labels.name}
-              {...field}
-             />
-            </FormControl>
-            {form.formState.errors.name ? <ErrorCaption>{form.formState.errors.name.message}</ErrorCaption> : null}
-           </FormItem>
-          )}
-         />
-         <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
-          {kanbanStrings.createModal.create}
-         </Button>
-        </>
-       ) : null}
-      </div>
-     </FormAtm>
-    </Modal>
    </div>
    {data?.boards.pageInfo.hasNextPage || data?.boards.pageInfo.hasPreviousPage ? (
     <div className="flex flex-row gap-sm justify-center items-center mb-sm">
