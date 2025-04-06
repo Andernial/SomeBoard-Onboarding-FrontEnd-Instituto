@@ -3,7 +3,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 export const button = tv(
  {
   base:
-   'box-border font-secondary rounded-sm py-xxs px-xs transition-all duration-500 focus:outline focus:duration-150',
+   'box-border font-secondary rounded-sm py-xxs px-xs transition-all duration-500 focus:outline focus:duration-150 select-none',
   variants: {
    color: {
     primary:
