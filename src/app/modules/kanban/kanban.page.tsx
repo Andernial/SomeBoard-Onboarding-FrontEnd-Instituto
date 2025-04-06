@@ -5,12 +5,13 @@ import { Button } from '@atomic/atm.button';
 import { useState } from 'react';
 
 export function KanbanPage() {
- const [placeholders, setPlaceholders] = useState(['item']);
+ const [placeholders, setPlaceholders] = useState([]);
  return (
-  <div className="bg-grayScale-xlight h-svh flex justify-center items-center text-start">
-   <section>
+  <div className="bg-grayScale-xlight min-h-full w-full flex flex-col  items-center text-start">
+      <div className="w-4/5">
     <H1 className="pt-lg">{kanbanStrings.title}</H1>
-    <div className="bg-grayScale-white w-[1156px] pb-xl pt-xl mt-md flex flex-col justify-center items-center rounded-md">
+  </div>
+    <div className="bg-grayScale-white  h-2/3 pb-xl pt-xl my-md flex flex-col justify-center w-4/5 items-center rounded-md">
     {placeholders.length ? (
      placeholders.map((item) => <p>{item}</p>)
     ) : (
@@ -24,7 +25,6 @@ export function KanbanPage() {
      </>
     )}
     </div>
-   </section>
   </div>
  );
 }
