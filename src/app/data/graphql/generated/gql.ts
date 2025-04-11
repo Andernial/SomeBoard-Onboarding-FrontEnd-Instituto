@@ -14,10 +14,12 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}": typeof types.CreateBoardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.CreateUserDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.LoginDocument,
 };
 const documents: Documents = {
+    "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}": types.CreateBoardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.CreateUserDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.LoginDocument,
 };
@@ -36,6 +38,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}"): (typeof documents)["mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
