@@ -20,8 +20,8 @@ export function LoggedLayout() {
  const { name } = useUserStorage.getState();
 
  return (
-  <div className="w-full h-full">
-   <header className="w-full h-[64px] bg-grayScale-white flex justify-around items-center gap-xl absolute  select-none">
+  <div className="flex flex-col w-full h-full">
+   <header className="w-full h-[64px] bg-grayScale-white flex justify-around items-center gap-xl select-none">
     <img src={logo} alt="logo" className="size-lg mr-xl" />
     <div>
      <img className="inline-flex mr-xxs ml-xl" src={placeholderProfile} alt="profile-image" />
@@ -35,8 +35,10 @@ export function LoggedLayout() {
      </DropDownMenu>
     </div>
    </header>
+    <div className='flex-1 flex-grow overflow-auto'>
+    <Outlet />
+    </div>
 
-   <Outlet />
   </div>
  );
 }
