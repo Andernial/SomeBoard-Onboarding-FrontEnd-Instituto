@@ -86,7 +86,7 @@ export function KanbanPage() {
 
  const handleSucess = () => {
   setReqSucess(true);
-  form.reset()
+  form.reset();
 
   setTimeout(() => {
    setIsModalOpen(false);
@@ -94,10 +94,10 @@ export function KanbanPage() {
   }, 2500);
  };
 
- const handleModalClose = () =>{
-    setIsModalOpen(false)
-    setReqSucess(false)
- }
+ const handleModalClose = () => {
+  setIsModalOpen(false);
+  setReqSucess(false);
+ };
 
  const handleInputFocus = () => {
   setReqError('');
@@ -108,17 +108,17 @@ export function KanbanPage() {
    <div className="w-4/5">
     <H1 className="pt-lg">{kanbanStrings.title}</H1>
    </div>
-   <div className="bg-grayScale-white py-lg pl-sm my-md flex flex-wrap  w-4/5 items-center gap-sm rounded-md">
+   <div className="bg-grayScale-white py-lg  my-md flex flex-wrap justify-center w-4/5 items-stretch  gap-sm rounded-md">
     {data?.boards.nodes?.length ? (
      data.boards.nodes.map((board, index) => (
       <React.Fragment key={index}>
        <Card>
-        <H1 className="overflow-hidden text-ellipsis">{board.name}</H1>
-        <B1>{kanbanStrings.createdAt}</B1>
+        <H1 className="px-sm pt-sm overflow-hidden text-ellipsis whitespace-nowrap">{board.name}</H1>
+        <B1 className="pt-xxs px-sm pb-lg">{kanbanStrings.createdAt}</B1>
        </Card>
        {index + 1 === data.boards.nodes.length ? (
         <div
-         className="size-[247px] mt-sm mb-sm flex justify-center items-center gap-xxs flex-col border-2 border-grayScale-light rounded-sm cursor-pointer"
+         className="w-1/5  flex justify-center items-center gap-xxs flex-col border-2 border-grayScale-light rounded-sm cursor-pointer"
          onClick={() => setIsModalOpen(true)}
         >
          <img src={addIcon} className="size-sm" />
