@@ -1,0 +1,15 @@
+query Boards($boardsPageInput: PageInput!) {
+  boards(pageInput: $boardsPageInput) {
+    pageInfo {
+      offset
+      limit
+      hasNextPage
+      hasPreviousPage
+    }
+    nodes {
+      id
+      name
+    }
+    count
+  }
+}
