@@ -39,6 +39,7 @@ export function LoggedLayout() {
     <Outlet />
     </div>
 
+
   </div>
  );
 }

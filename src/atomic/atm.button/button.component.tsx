@@ -17,7 +17,7 @@ interface LinkButtonProps extends ButtonVariants {
  hasIcon?: boolean;
 }
 
-export function Button({ color, disabled, children, style, className, ...props }: ButtonProps) {
+export function Button({ color, children, style, className, ...props }: ButtonProps) {
  return (
   <button className={button({ color, style, className, ...props })} {...props}>
    {children}
