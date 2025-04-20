@@ -9,15 +9,16 @@ export function CardSkeleton({ className }: CardSkeletonProps) {
  return (
   <div
    className={clsx(
-    'size-[247px] mt-sm mb-sm flex flex-col border-2 border-grayScale-light rounded-sm cursor-pointer',
+    'w-full h-full flex flex-col border-2 border-grayScale-light rounded-sm cursor-pointer',
     className,
    )}
   >
-   <Skeleton className="bg-grayScale-medium rounded-t-sm h-1/2" />
-   <section className="flex flex-col gap-xxs justify-center ml-sm mr-sm h-1/2">
-    <Skeleton className="bg-grayScale-medium rounded-xs w-1/2 h-xs" />
-    <Skeleton className="bg-grayScale-medium rounded-xs w-full h-xs" />
+   <Skeleton className="bg-grayScale-medium rounded-t-sm py-lg" />
+   <section className="flex flex-col gap-xxs justify-center pt-sm pb-lg">
+    <Skeleton className="bg-grayScale-medium rounded-xs w-1/2 ml-sm h-xs" />
+    <Skeleton className="bg-grayScale-medium rounded-xs w-3/4 ml-sm h-xs " />
    </section>
   </div>
  );
 }
+

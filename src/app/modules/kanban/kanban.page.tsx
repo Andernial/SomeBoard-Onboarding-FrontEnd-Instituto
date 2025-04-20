@@ -2,7 +2,7 @@ import { B1, H1, H3, InputLabel, Link } from '@atomic/atm.typography';
 import { kanbanStrings } from './kanban.page.strings';
 import { useCreateBoard } from '@domain/board';
 import { Button } from '@atomic/atm.button';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Modal } from '@atomic/atm.modal/modal.component';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
 import { FormControl, FormField, FormItem } from '@components/ui/form';
@@ -25,6 +25,7 @@ export function KanbanPage() {
  const [reqSucess, setReqSucess] = useState(false);
  const [isModalOpen, setIsModalOpen] = useState(false);
  const [offset, setOffSet] = useState(0);
+ const timeoutRef = useRef<number | null>(null);
 
  const form = useForm<z.infer<typeof projectFormSchema>>({
   resolver: zodResolver(projectFormSchema),
@@ -77,8 +78,6 @@ export function KanbanPage() {
  const limit = 7;
 
  const { data, loading } = useBoards({
-  onCompleted: (data) => {},
-  onError: (data) => {},
   variables: {
    boardsPageInput: { offset, limit },
   },
@@ -93,13 +92,17 @@ export function KanbanPage() {
   setReqSucess(true);
   form.reset();
 
-  setTimeout(() => {
+  timeoutRef.current = window.setTimeout(() => {
    setIsModalOpen(false);
    setReqSucess(false);
   }, 2500);
  };
 
  const handleModalClose = () => {
+  if (timeoutRef.current) {
+   clearTimeout(timeoutRef.current);
+   timeoutRef.current = null;
+  }
   setIsModalOpen(false);
   setReqSucess(false);
  };
@@ -114,13 +117,20 @@ export function KanbanPage() {
     <H1 className="pt-lg">{kanbanStrings.title}</H1>
    </div>
 
-   <div className="bg-grayScale-white py-lg  my-md flex flex-wrap justify-center w-4/5 items-stretch  gap-sm rounded-md">
-    {loading ? (
-     Array.from({ length: 4 }).map((_unused, index) => <CardSkeleton key={index} />)
-    ) : (
-     <>
-      {data?.boards.nodes?.length ? (
-       data.boards.nodes.map((board, index) => (
+   {loading ? (
+    <div className="bg-grayScale-white py-lg px-lg my-md grid grid-cols-4 gap-sm w-4/5 justify-items-center items-center rounded-sm">
+     {Array.from({ length: 8 }).map((_unused, index) => (
+      <CardSkeleton key={index} />
+     ))}
+    </div>
+   ) : (
+    <>
+     {data?.boards.nodes?.length ? (
+      <div
+       className="bg-grayScale-white py-lg px-lg my-md grid grid-cols-4 gap-sm  w-4/5 justify-items-center items-center rounded-sm"
+       style={{ gridAutoRows: '1fr' }}
+      >
+       {data.boards.nodes.map((board, index) => (
         <React.Fragment key={index}>
          <Card>
           <H1 className="px-sm pt-sm overflow-hidden text-ellipsis whitespace-nowrap">{board.name}</H1>
@@ -128,7 +138,7 @@ export function KanbanPage() {
          </Card>
          {index + 1 === data.boards.nodes.length ? (
           <div
-           className="w-1/5  flex justify-center items-center gap-xxs flex-col border-2 border-grayScale-light rounded-sm cursor-pointer"
+           className="w-full h-full  flex justify-center items-center gap-xxs flex-col border-2 border-grayScale-light rounded-sm cursor-pointer"
            onClick={() => setIsModalOpen(true)}
           >
            <img src={addIcon} className="size-sm" />
@@ -136,59 +146,59 @@ export function KanbanPage() {
           </div>
          ) : null}
         </React.Fragment>
-       ))
-      ) : (
-       <div className="h-full w-full py-lg flex flex-col justify-center items-center rounded-md">
-        <img src={emptyPlaceholder} />
-        <H3 className="pt-sm">{kanbanStrings.emptyState.title}</H3>
-        <B1 className="pt-xxs">{kanbanStrings.emptyState.subTitle}</B1>
-        <Button color="cta" className="mt-sm" onClick={() => setIsModalOpen(true)}>
-         {kanbanStrings.createButton}
-        </Button>
-       </div>
-      )}
-      <Modal isOpen={isModalOpen} onClose={() => handleModalClose()}>
-       <FormAtm
-        form={form}
-        className="h-full flex items-center justify-center"
-        onSubmit={form.handleSubmit(handleSubmit)}
-        onChange={handleInputFocus}
-       >
-        <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
-         <H1>{!reqSucess ? kanbanStrings.createModal.title : kanbanStrings.sucessCreated}</H1>
-         <img src={!reqSucess ? emptyPlaceholder : sucessIcon} alt="placeholder" className="p-sm" />
-         {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
+       ))}
+      </div>
+     ) : (
+      <div className="bg-grayScale-white  w-4/5 my-md h-full py-xl flex flex-col justify-center items-center rounded-md">
+       <img src={emptyPlaceholder} />
+       <H3 className="pt-sm">{kanbanStrings.emptyState.title}</H3>
+       <B1 className="pt-xxs">{kanbanStrings.emptyState.subTitle}</B1>
+       <Button color="cta" className="mt-sm" onClick={() => setIsModalOpen(true)}>
+        {kanbanStrings.createButton}
+       </Button>
+      </div>
+     )}
+     <Modal isOpen={isModalOpen} onClose={() => handleModalClose()}>
+      <FormAtm
+       form={form}
+       className="h-full flex items-center justify-center"
+       onSubmit={form.handleSubmit(handleSubmit)}
+       onChange={handleInputFocus}
+      >
+       <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
+        <H1>{!reqSucess ? kanbanStrings.createModal.title : kanbanStrings.sucessCreated}</H1>
+        <img src={!reqSucess ? emptyPlaceholder : sucessIcon} alt="placeholder" className="p-sm" />
+        {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
 
-         {!reqSucess ? (
-          <>
-           <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-             <FormItem>
-              <InputLabel className="my-xxs">{kanbanStrings.createModal.labels.name}</InputLabel>
-              <FormControl>
-               <TextInput
-                error={!!form.formState.errors.name}
-                placeholder={kanbanStrings.createModal.labels.name}
-                {...field}
-               />
-              </FormControl>
-              {form.formState.errors.name ? <ErrorCaption>{form.formState.errors.name.message}</ErrorCaption> : null}
-             </FormItem>
-            )}
-           />
-           <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
-            {kanbanStrings.createModal.create}
-           </Button>
-          </>
-         ) : null}
-        </div>
-       </FormAtm>
-      </Modal>
-     </>
-    )}
-   </div>
+        {!reqSucess ? (
+         <>
+          <FormField
+           control={form.control}
+           name="name"
+           render={({ field }) => (
+            <FormItem>
+             <InputLabel className="my-xxs">{kanbanStrings.createModal.labels.name}</InputLabel>
+             <FormControl>
+              <TextInput
+               error={!!form.formState.errors.name}
+               placeholder={kanbanStrings.createModal.labels.name}
+               {...field}
+              />
+             </FormControl>
+             {form.formState.errors.name ? <ErrorCaption>{form.formState.errors.name.message}</ErrorCaption> : null}
+            </FormItem>
+           )}
+          />
+          <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
+           {kanbanStrings.createModal.create}
+          </Button>
+         </>
+        ) : null}
+       </div>
+      </FormAtm>
+     </Modal>
+    </>
+   )}
    {data?.boards.pageInfo.hasNextPage || data?.boards.pageInfo.hasPreviousPage ? (
     <div className="flex flex-row gap-sm justify-center items-center mb-sm">
      <Button

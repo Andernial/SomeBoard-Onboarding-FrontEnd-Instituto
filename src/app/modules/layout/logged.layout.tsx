@@ -35,7 +35,7 @@ export function LoggedLayout() {
      </DropDownMenu>
     </div>
    </header>
-    <div className='flex-1 flex-grow overflow-auto'>
+    <div className='h-full overflow-auto'>
     <Outlet />
     </div>
 
