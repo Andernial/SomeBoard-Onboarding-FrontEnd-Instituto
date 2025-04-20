@@ -17,12 +17,14 @@ type Documents = {
     "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}": typeof types.CreateBoardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.CreateUserDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.LoginDocument,
+    "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}": typeof types.UpdateBoardDocument,
     "query Boards($boardsPageInput: PageInput!) {\n  boards(pageInput: $boardsPageInput) {\n    pageInfo {\n      offset\n      limit\n      hasNextPage\n      hasPreviousPage\n    }\n    nodes {\n      id\n      name\n    }\n    count\n  }\n}": typeof types.BoardsDocument,
 };
 const documents: Documents = {
     "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}": types.CreateBoardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.CreateUserDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.LoginDocument,
+    "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}": types.UpdateBoardDocument,
     "query Boards($boardsPageInput: PageInput!) {\n  boards(pageInput: $boardsPageInput) {\n    pageInfo {\n      offset\n      limit\n      hasNextPage\n      hasPreviousPage\n    }\n    nodes {\n      id\n      name\n    }\n    count\n  }\n}": types.BoardsDocument,
 };
 
@@ -52,6 +54,10 @@ export function graphql(source: "mutation CreateUser($UserInput: UserInput!) {\n
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}"): (typeof documents)["mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}"): (typeof documents)["mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

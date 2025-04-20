@@ -7,3 +7,8 @@ const projectFormStrigs = {
 export const projectFormSchema = z.object({
  name: z.string().nonempty({ message: projectFormStrigs.emptyName }),
 });
+
+export const editProjectFormSchema = z.object({
+ id: z.string(),
+ name: z.string().nonempty({ message: projectFormStrigs.emptyName }),
+});
