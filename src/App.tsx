@@ -10,6 +10,7 @@ import { AuthGuard } from './app/guards/auth-guard';
 import { LoggedLayout } from './app/modules/layout/logged.layout';
 import { BoardPage } from './app/modules/board/board.page';
 import { KanbanPage } from './app/modules/kanban/kanban.page';
+import { Toaster } from '@components/ui/toaster';
 
 const router = createBrowserRouter([
  {
@@ -38,7 +39,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
- return <RouterProvider router={router} />;
-}
+    return (
+      <>
+        <RouterProvider router={router} />
+        <Toaster />
+      </>
+    );
+  }
 
 export default App;
