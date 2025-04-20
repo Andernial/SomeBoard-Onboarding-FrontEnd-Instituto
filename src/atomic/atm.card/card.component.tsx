@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import cardPlaceHolder from '@assets/images/card-placeholder.png';
 
 interface CardProps {
  children: React.ReactNode;
@@ -14,7 +13,6 @@ export function Card({ children, className }: CardProps) {
     className,
    )}
   >
-   <img src={cardPlaceHolder} className="rounded-t-sm h-1/2 w-full" />
    <section className="flex flex-col justify-center h-1/2">{children}</section>
   </div>
  );
