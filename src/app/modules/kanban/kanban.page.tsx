@@ -13,7 +13,6 @@ import { projectFormSchema } from '@atomic/obj.form/zod-schemas/project-form-sch
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBoards } from '@domain/board/boards.use-case';
 import { Card } from '@atomic/atm.card';
-import { BoardsDocument } from '@data/graphql/generated/graphql';
 import { CardSkeleton } from '@atomic/atm.card/card.skeleton';
 import z from 'zod';
 import sucessIcon from '@assets/icons/sucess.png';
@@ -35,6 +34,8 @@ export function KanbanPage() {
   },
  });
 
+ const limit = 7;
+
  const { createBoardMutation } = useCreateBoard({
   onCompleted: (data) => {
    setOffSet(0);
@@ -43,39 +44,8 @@ export function KanbanPage() {
   onError: (data) => {
    setReqError(data.message);
   },
-  update: (cache, result) => {
-   const newBoard = result.data?.createBoard;
-   if (!newBoard) {
-    return;
-   }
-
-   cache.updateQuery(
-    {
-     query: BoardsDocument,
-     variables: { boardsPageInput: { offset: 0, limit } },
-    },
-
-    (existing) => {
-     if (!existing?.boards?.nodes) {
-      return existing;
-     }
-
-     return {
-      boards: {
-       ...existing.boards,
-       nodes: [newBoard, ...existing.boards.nodes].slice(0, 7),
-       pageInfo: {
-        ...existing.boards.pageInfo,
-        hasNextPage: existing.boards.nodes.length === 7 ? true : existing.boards.pageInfo.hasNextPage,
-       },
-      },
-     };
-    },
-   );
-  },
+  limit,
  });
-
- const limit = 7;
 
  const { data, loading } = useBoards({
   variables: {
