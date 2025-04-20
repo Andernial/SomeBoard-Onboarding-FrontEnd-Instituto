@@ -51,7 +51,7 @@ export function KanbanPage() {
 
  const limit = 7;
 
- const { updateBoardMutation } = useUpdateBoard({
+ const { updateBoardMutation, loading: updateBoardLoading } = useUpdateBoard({
   onCompleted: (data) => {
    handleSucess();
    console.log(data);
@@ -260,7 +260,7 @@ export function KanbanPage() {
             </FormItem>
            )}
           />
-          <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
+          <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!updateBoardLoading}>
            {kanbanStrings.editModal.edit}
           </Button>
          </>
