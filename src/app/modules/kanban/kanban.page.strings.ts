@@ -12,6 +12,14 @@ export const kanbanStrings = {
    name: 'Nome do projeto',
   },
  },
+ editModal: {
+  title: 'Editar projeto',
+  edit: 'Editar',
+  sucessEdited: 'Projeto editado com sucesso',
+  labels: {
+   name: 'Nome do projeto',
+  },
+ },
  emptyState: {
   title: 'Nenhum projeto',
   subTitle: 'Você ainda não tem nenhum projeto criado.',

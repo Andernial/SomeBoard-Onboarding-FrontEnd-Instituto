@@ -19,14 +19,27 @@ import sucessIcon from '@assets/icons/sucess.png';
 import emptyPlaceholder from '@assets/images/Empty-State.png';
 import addIcon from '@assets/icons/add.png';
 
+import cardPlaceHolder from '@assets/images/card-placeholder.png';
+import editModalIcon from '@assets/icons/edit-bold.png';
+import { Board } from '@data/graphql/generated/graphql';
+
 export function KanbanPage() {
  const [reqError, setReqError] = useState<string>();
  const [reqSucess, setReqSucess] = useState(false);
  const [isModalOpen, setIsModalOpen] = useState(false);
+ const [isEditModalOpen, setIsEditModalOpen] = useState(false);
  const [offset, setOffSet] = useState(0);
  const timeoutRef = useRef<number | null>(null);
 
  const form = useForm<z.infer<typeof projectFormSchema>>({
+  resolver: zodResolver(projectFormSchema),
+  mode: 'onChange',
+  defaultValues: {
+   name: '',
+  },
+ });
+
+ const editForm = useForm<z.infer<typeof projectFormSchema>>({
   resolver: zodResolver(projectFormSchema),
   mode: 'onChange',
   defaultValues: {
@@ -77,6 +90,20 @@ export function KanbanPage() {
   setReqSucess(false);
  };
 
+ const handleOpenEditModal = (board: Board) => {
+  editForm.reset({ name: board.name });
+  setIsEditModalOpen(true);
+ };
+
+ const handleEditModalClose = () => {
+  if (timeoutRef.current) {
+   clearTimeout(timeoutRef.current);
+   timeoutRef.current = null;
+  }
+  setIsEditModalOpen(false);
+  setReqSucess(false);
+ };
+
  const handleInputFocus = () => {
   setReqError('');
  };
@@ -103,6 +130,18 @@ export function KanbanPage() {
        {data.boards.nodes.map((board, index) => (
         <React.Fragment key={index}>
          <Card>
+          <div className="relative h-1/2 w-full">
+           <img src={cardPlaceHolder} className="rounded-t-sm h-full w-full object-cover" />
+
+           <button
+            className="absolute top-xs right-xs bg-grayScale-white cursor-pointer rounded-xs"
+            onClick={() => {
+             handleOpenEditModal(board);
+            }}
+           >
+            <img src={editModalIcon} alt="editar" />
+           </button>
+          </div>
           <H1 className="px-sm pt-sm overflow-hidden text-ellipsis whitespace-nowrap">{board.name}</H1>
           <B1 className="pt-xxs px-sm pb-lg">{kanbanStrings.createdAt}</B1>
          </Card>
@@ -161,6 +200,46 @@ export function KanbanPage() {
           />
           <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
            {kanbanStrings.createModal.create}
+          </Button>
+         </>
+        ) : null}
+       </div>
+      </FormAtm>
+     </Modal>
+
+     <Modal isOpen={isEditModalOpen} onClose={() => handleEditModalClose()}>
+      <FormAtm
+       form={editForm}
+       className="h-full flex items-center justify-center"
+       onSubmit={editForm.handleSubmit(handleSubmit)}
+       onChange={handleInputFocus}
+      >
+       <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
+        <H1>{!reqSucess ? kanbanStrings.editModal.title : kanbanStrings.editModal.sucessEdited}</H1>
+        <img src={!reqSucess ? emptyPlaceholder : sucessIcon} alt="placeholder" className="p-sm" />
+        {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
+
+        {!reqSucess ? (
+         <>
+          <FormField
+           control={editForm.control}
+           name="name"
+           render={({ field }) => (
+            <FormItem>
+             <InputLabel className="my-xxs">{kanbanStrings.createModal.labels.name}</InputLabel>
+             <FormControl>
+              <TextInput
+               error={!!editForm.formState.errors.name}
+               placeholder={kanbanStrings.createModal.labels.name}
+               {...field}
+              />
+             </FormControl>
+             {editForm.formState.errors.name ? <ErrorCaption>{editForm.formState.errors.name.message}</ErrorCaption> : null}
+            </FormItem>
+           )}
+          />
+          <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
+           {kanbanStrings.editModal.edit}
           </Button>
          </>
         ) : null}
