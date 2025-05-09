@@ -1,0 +1,6 @@
+mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {
+  updateBoard(data: $updateBoardData) {
+    id
+    name
+  }
+}

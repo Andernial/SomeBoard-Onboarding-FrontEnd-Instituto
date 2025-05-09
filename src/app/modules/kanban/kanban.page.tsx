@@ -9,7 +9,7 @@ import { FormControl, FormField, FormItem } from '@components/ui/form';
 import { TextInput } from '@atomic/atm.text-input';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 import { useForm } from 'react-hook-form';
-import { projectFormSchema } from '@atomic/obj.form/zod-schemas/project-form-schema';
+import { editProjectFormSchema, projectFormSchema } from '@atomic/obj.form/zod-schemas/project-form-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBoards } from '@domain/board/boards.use-case';
 import { Card } from '@atomic/atm.card';
@@ -22,6 +22,7 @@ import addIcon from '@assets/icons/add.png';
 import cardPlaceHolder from '@assets/images/card-placeholder.png';
 import editModalIcon from '@assets/icons/edit-bold.png';
 import { Board } from '@data/graphql/generated/graphql';
+import { useUpdateBoard } from '@domain/board/update-board.use-case';
 
 export function KanbanPage() {
  const [reqError, setReqError] = useState<string>();
@@ -39,15 +40,27 @@ export function KanbanPage() {
   },
  });
 
- const editForm = useForm<z.infer<typeof projectFormSchema>>({
-  resolver: zodResolver(projectFormSchema),
+ const editForm = useForm<z.infer<typeof editProjectFormSchema>>({
+  resolver: zodResolver(editProjectFormSchema),
   mode: 'onChange',
   defaultValues: {
    name: '',
+   id: '',
   },
  });
 
  const limit = 7;
+
+ const { updateBoardMutation, loading: updateBoardLoading } = useUpdateBoard({
+  onCompleted: (data) => {
+   handleSucess();
+   console.log(data);
+  },
+
+  onError: (data) => {
+   setReqError(data.message);
+  },
+ });
 
  const { createBoardMutation } = useCreateBoard({
   onCompleted: (data) => {
@@ -71,11 +84,18 @@ export function KanbanPage() {
   createBoardMutation({ variables: { boardInput } });
  };
 
+ const handleEditProjectSubmit = (values: z.infer<typeof editProjectFormSchema>) => {
+  const updateBoardData = { id: values.id, name: values.name };
+  updateBoardMutation({ variables: { updateBoardData } });
+ };
+
  const handleSucess = () => {
   setReqSucess(true);
   form.reset();
+  editForm.reset();
 
   timeoutRef.current = window.setTimeout(() => {
+   setIsEditModalOpen(false);
    setIsModalOpen(false);
    setReqSucess(false);
   }, 2500);
@@ -91,7 +111,7 @@ export function KanbanPage() {
  };
 
  const handleOpenEditModal = (board: Board) => {
-  editForm.reset({ name: board.name });
+  editForm.reset({ name: board.name, id: board.id });
   setIsEditModalOpen(true);
  };
 
@@ -211,7 +231,7 @@ export function KanbanPage() {
       <FormAtm
        form={editForm}
        className="h-full flex items-center justify-center"
-       onSubmit={editForm.handleSubmit(handleSubmit)}
+       onSubmit={editForm.handleSubmit(handleEditProjectSubmit)}
        onChange={handleInputFocus}
       >
        <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
@@ -234,11 +254,13 @@ export function KanbanPage() {
                {...field}
               />
              </FormControl>
-             {editForm.formState.errors.name ? <ErrorCaption>{editForm.formState.errors.name.message}</ErrorCaption> : null}
+             {editForm.formState.errors.name ? (
+              <ErrorCaption>{editForm.formState.errors.name.message}</ErrorCaption>
+             ) : null}
             </FormItem>
            )}
           />
-          <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
+          <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!updateBoardLoading}>
            {kanbanStrings.editModal.edit}
           </Button>
          </>
