@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-import { AuthRoutes } from './auth.rotes';
+import { AuthRoutes } from '../auth.routes';
 import { B1, H1, InputLabel } from '@/atomic/atm.typography';
 import { registerPageStrings } from './register.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
@@ -16,7 +16,7 @@ import { registerFormSchema } from '@atomic/obj.form/zod-schemas/register-form.s
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
 import { useCreateUser } from '@domain/auth/register.use-case';
 
-function RegisterPage() {
+export function RegisterPage() {
  const [reqError, setReqError] = useState('');
 
  const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -194,5 +194,3 @@ function RegisterPage() {
   </div>
  );
 }
-
-export default RegisterPage;
