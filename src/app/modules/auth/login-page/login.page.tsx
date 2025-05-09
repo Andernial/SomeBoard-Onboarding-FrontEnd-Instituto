@@ -2,7 +2,7 @@ import { Button, LinkButton } from '@/atomic/atm.button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-import { AuthRoutes } from './auth.rotes';
+import { AuthRoutes } from '../auth.routes';
 import { B1, H1, InputLabel } from '@/atomic/atm.typography';
 import { loginPageStrings } from './login.page.strings';
 import { PasswordInput, TextInput } from '@/atomic/atm.text-input';
@@ -13,7 +13,6 @@ import { useState } from 'react';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
 import z from 'zod';
-
 
 function LoginPage() {
  const [reqError, setReqError] = useState<string>();
