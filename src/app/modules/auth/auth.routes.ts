@@ -2,6 +2,6 @@ export enum AuthRoutes {
  LOGIN = '/login',
  REGISTER = '/register',
  HOME = '/',
- KANBAN = '/kanban',
+ KANBAN = '/board',
  BOARD = '/board/:boardId'
 }
