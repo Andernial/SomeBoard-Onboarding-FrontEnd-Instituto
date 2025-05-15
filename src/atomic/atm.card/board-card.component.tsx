@@ -8,6 +8,8 @@ import { kanbanStrings } from '@/app/modules/kanban/kanban.page.strings';
 import { EditBoard } from '@atomic/atm.modal/edit-board.component';
 import { Board } from '@data/graphql/generated/graphql';
 import { DeleteBoard } from '@atomic/atm.modal/delete-board.component';
+import { useNavigate } from 'react-router-dom';
+import { AuthRoutes } from '@/app/modules/auth/auth.routes';
 
 interface BoardCardProps {
  board: Board;
@@ -19,17 +21,25 @@ export function BoardCard({ board, limit, offset }: BoardCardProps) {
  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
- const handleOpenEditModal = () => {
+ const navigate = useNavigate();
+
+ const handleClick = () => {
+  navigate(`${AuthRoutes.BOARD.replace(':boardId', board.id)}`);
+ };
+
+ const handleOpenEditModal = (e: React.MouseEvent) => {
+  e.stopPropagation();
   setIsEditModalOpen(true);
  };
 
- const handleOpenDeleteModal = () => {
+ const handleOpenDeleteModal = (e: React.MouseEvent) => {
+  e.stopPropagation();
   setIsDeleteModalOpen(true);
  };
 
  return (
   <>
-   <Card>
+   <Card onClick={handleClick}>
     <div className="relative h-1/2 w-full">
      <img src={cardPlaceHolder} className="rounded-t-sm h-full w-full object-cover" />
 
@@ -52,7 +62,13 @@ export function BoardCard({ board, limit, offset }: BoardCardProps) {
    </Card>
 
    <EditBoard isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} board={board} />
-   <DeleteBoard isOpen={isDeleteModalOpen} limit={limit} offset={offset} onClose={() => setIsDeleteModalOpen(false)} board={board} />
+   <DeleteBoard
+    isOpen={isDeleteModalOpen}
+    limit={limit}
+    offset={offset}
+    onClose={() => setIsDeleteModalOpen(false)}
+    board={board}
+   />
   </>
  );
 }
