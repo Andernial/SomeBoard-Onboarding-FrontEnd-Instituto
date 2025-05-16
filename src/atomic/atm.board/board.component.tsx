@@ -24,7 +24,7 @@ export function BoardColumn({ columName, columnType, cards }: BoardProps) {
     <img src={moreIcon} className="size-sm" />
    </div>
 
-   <div className="bg-grayScale-xlight w-[87%] h-3/4 flex flex-col items-center rounded-sm mt-sm overflow-y-auto p-xxs">
+   <div className="bg-grayScale-xlight w-[90%] h-3/4 flex flex-col items-center rounded-sm mt-sm overflow-y-auto p-xxs">
    {cards.map((card) => (
     <KanbanCard card={card} className='mt-xxs'/>
    ))}

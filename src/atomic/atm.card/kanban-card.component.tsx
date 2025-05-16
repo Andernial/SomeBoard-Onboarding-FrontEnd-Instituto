@@ -26,16 +26,16 @@ export function KanbanCard({ className, card ,onClick }: CardProps) {
    <div className="w-[90%]">
     <H4 className="pt-xs text-start">{CardStrings.title}</H4>
     <div className="inline-flex gap-xxs pt-xxs">
-     <img src={placeholder} className="size-xs mt-[3px]" />
+     <img src={placeholder} className="size-xs mt-xxxs" />
      <B1 className="text-ellipsis overflow-hidden whitespace-nowrap">{card.name}</B1>
     </div>
     <div className="inline-flex gap-xxs py-xs">
-     <div className="inline-flex gap-[2px]">
+     <div className="inline-flex gap-xxs">
       <img src={comment} className="size-xs mt-[2px]" />
       <B2 className="text-ellipsis overflow-hidden whitespace-nowrap">{CardStrings.comments}</B2>
      </div>
 
-     <div className="inline-flex gap-[2px]">
+     <div className="inline-flex gap-xxxs">
       <img src={info} className="size-xs mt-[2px]" />
       <B2 className="text-ellipsis overflow-hidden whitespace-nowrap">{card.createdAt}</B2>
      </div>
