@@ -30,7 +30,7 @@ export function KanbanCard({ className, card ,onClick }: CardProps) {
      <B1 className="text-ellipsis overflow-hidden whitespace-nowrap">{card.name}</B1>
     </div>
     <div className="inline-flex gap-xxs py-xs">
-     <div className="inline-flex gap-xxs">
+     <div className="inline-flex gap-xxxs">
       <img src={comment} className="size-xs mt-[2px]" />
       <B2 className="text-ellipsis overflow-hidden whitespace-nowrap">{CardStrings.comments}</B2>
      </div>
