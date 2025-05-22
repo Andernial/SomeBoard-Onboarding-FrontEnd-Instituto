@@ -50,6 +50,7 @@ export default withTV({
   },
 
   spacing: {
+   xxxs: '4px',
    xxs: '8px',
    xs: '16px',
    sm: '24px',
