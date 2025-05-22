@@ -23,7 +23,7 @@ const cards = [
 export function BoardPage() {
  const [cardsState, setCardsState] = useState(cards);
 
- const onDragEnd = (result: DropResult) => {
+ const handleOnDragEnd = (result: DropResult) => {
   const { destination, source, draggableId } = result;
   if (!destination) return;
 
@@ -78,7 +78,7 @@ export function BoardPage() {
     <H1 className="pt-lg">{boardStrings.title}</H1>
    </div>
    <div className="grid grid-cols-4 h-full w-[90%] gap-sm pt-md">
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
      {boardColumns.map((type) => {
       const columnCards = cardsState
        .filter((card) => card.columnType === type.columnType)
