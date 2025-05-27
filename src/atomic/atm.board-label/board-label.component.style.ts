@@ -1,10 +1,11 @@
+import { CardColumns } from '@data/graphql/generated/graphql';
 import { tv, VariantProps } from 'tailwind-variants';
 
 export const boardLabelColors = {
- toDo: 'bg-grayScale-medium',
- inProgress: 'bg-feedback-warning-light',
- review: 'bg-feedback-error-light',
- done: 'bg-feedback-success-light',
+ [CardColumns.ToDo]: 'bg-grayScale-medium',
+ [CardColumns.InProgress]: 'bg-feedback-warning-light',
+ [CardColumns.InReview]: 'bg-feedback-error-light',
+ [CardColumns.Done]: 'bg-feedback-success-light',
 };
 
 export const boardLabel = tv(
@@ -15,7 +16,7 @@ export const boardLabel = tv(
   },
 
   defaultVariants: {
-   color: 'toDo',
+   color: CardColumns.ToDo,
   },
  },
  { twMerge: true },

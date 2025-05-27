@@ -4,15 +4,11 @@ import { Draggable } from '@hello-pangea/dnd';
 import placeholder from '@assets/images/placeholder-profile.png';
 import comment from '@assets/icons/edit-empty.png';
 import info from '@assets/icons/information.png';
-
-interface MockCardModel {
- id: number;
- name: string;
- createdAt: string;
-}
+import { Card } from '@data/graphql/generated/graphql';
+import { useUserStorage } from '@/app/stores/user.store';
 
 interface CardProps {
- card: MockCardModel;
+ card: Card;
  index: number;
  onClick?: () => void;
  className?: string;
@@ -24,8 +20,10 @@ const CardStrings = {
 };
 
 export function KanbanCard({ className, card, index }: CardProps) {
+  const { name } = useUserStorage.getState();
+
  return (
-  <Draggable draggableId={String(card.id)} index={index}>
+  <Draggable draggableId={card.id} index={index}>
    {(provided) => (
     <div
      className={clsx('w-[90%] bg-grayScale-white rounded-sm flex flex-col items-center select-none', className)}
@@ -34,10 +32,10 @@ export function KanbanCard({ className, card, index }: CardProps) {
      ref={provided.innerRef}
     >
      <div className="w-[90%]">
-      <H4 className="pt-xs text-start">{CardStrings.title}</H4>
+      <H4 className="pt-xs text-start">{card.name}</H4>
       <div className="inline-flex gap-xxs pt-xxs">
        <img src={placeholder} className="size-xs mt-xxxs" />
-       <B1 className="text-ellipsis overflow-hidden whitespace-nowrap">{card.name}</B1>
+       <B1 className="text-ellipsis overflow-hidden whitespace-nowrap">{name}</B1>
       </div>
       <div className="inline-flex gap-xxs py-xs">
        <div className="inline-flex gap-xxxs">
@@ -47,7 +45,7 @@ export function KanbanCard({ className, card, index }: CardProps) {
 
        <div className="inline-flex gap-xxxs">
         <img src={info} className="size-xs mt-[2px]" />
-        <B2 className="text-ellipsis overflow-hidden whitespace-nowrap">{card.createdAt}</B2>
+        <B2 className="text-ellipsis overflow-hidden whitespace-nowrap">{`${new Date(card.createdAt).toLocaleDateString('pt-BR')}`}</B2>
        </div>
       </div>
      </div>
