@@ -23,10 +23,10 @@ const CardStrings = {
  comments: '0 comentários',
 };
 
-export function KanbanCard({ className, card, onClick, index }: CardProps) {
+export function KanbanCard({ className, card, index }: CardProps) {
  return (
   <Draggable draggableId={String(card.id)} index={index}>
-   {(provided, snapshot) => (
+   {(provided) => (
     <div
      className={clsx('w-[90%] bg-grayScale-white rounded-sm flex flex-col items-center select-none', className)}
      {...provided.draggableProps}
