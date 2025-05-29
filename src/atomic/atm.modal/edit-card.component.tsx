@@ -7,85 +7,77 @@ import { useState } from 'react';
 import { FormAtm } from '@atomic/obj.form/atm.form.component';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CardColumns } from '@data/graphql/generated/graphql';
+import { Card } from '@data/graphql/generated/graphql';
 import { taskFormSchema } from '@atomic/obj.form/zod-schemas/task-form-schema';
 import z from 'zod';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 import { FormControl, FormField, FormItem } from '@components/ui/form';
 import { TextInput } from '@atomic/atm.text-input';
-import { useCreateCard } from '@domain/card/create-card.use-case';
+import { useUpdateCard } from '@domain/card/update-card.use-case';
 
-interface CreateBoardProps {
- id: string;
- column: CardColumns;
- order: number[];
+interface EditBoardProps {
+ card: Card;
  isOpen: boolean;
  onClose: () => void;
 }
 
-export function CreateCard({ isOpen, onClose, id, column, order }: CreateBoardProps) {
+export function EditCard({ isOpen, onClose, card }: EditBoardProps) {
  const [reqError, setReqError] = useState<string>();
  const { toast } = useToast();
 
- const { createCardMutation, loading } = useCreateCard({
+ const { updateCardMutation, loading } = useUpdateCard({
   onCompleted: () => {
-   createForm.reset();
-   toast({ title: kanbanStrings.createTaskModal.sucessCreated });
+   editForm.reset({ name: card.name });
+   toast({ title: kanbanStrings.editTaskModal.sucessEdited });
    onClose();
   },
   onError: (error) => {
    setReqError(error.message);
   },
-  boardId: id,
  });
 
- const handleCreateCardSubmit = (values: z.infer<typeof taskFormSchema>) => {
-  const newOrder =
-   order.length > 1 ? order.reduce((current, previous) => (current > previous ? current : previous)) + 1 : 0;
+ const handleUpdateCardSubmit = (values: z.infer<typeof taskFormSchema>) => {
+  const updateCardData = { ...values, id: card.id, column: card.column };
 
-  const cardData = { ...values, boardId: id, column, order: newOrder };
-
-  createCardMutation({ variables: { cardData } });
+  updateCardMutation({ variables: { updateCardData } });
  };
 
  const handleCloseModal = () => {
-  createForm.clearErrors();
+  editForm.clearErrors();
   onClose();
  };
 
- const createForm = useForm<z.infer<typeof taskFormSchema>>({
+ const editForm = useForm<z.infer<typeof taskFormSchema>>({
   resolver: zodResolver(taskFormSchema),
   mode: 'onChange',
-  defaultValues: { name: '' },
+  defaultValues: isOpen ? { name: card.name } : { name: '' },
  });
 
  return (
   <Modal isOpen={isOpen} onClose={handleCloseModal}>
    <FormAtm
-    form={createForm}
+    form={editForm}
     className="h-full flex items-center justify-center"
-    onSubmit={createForm.handleSubmit(handleCreateCardSubmit)}
+    onSubmit={editForm.handleSubmit(handleUpdateCardSubmit)}
    >
     <div className="flex flex-col items-center w-[400px] h-max[478px] px-xs">
-     <H1>{kanbanStrings.createTaskModal.title}</H1>
+     <H1>{kanbanStrings.editTaskModal.title}</H1>
      {reqError ? <ErrorCaption className="w-11/12">{reqError}</ErrorCaption> : null}
      <>
       <FormField
-       control={createForm.control}
+       control={editForm.control}
        name="name"
        render={({ field }) => (
         <FormItem>
-         <InputLabel className="my-xxs">{kanbanStrings.createTaskModal.labels.name}</InputLabel>
+         <InputLabel className="my-xxs">{kanbanStrings.editTaskModal.labels.name}</InputLabel>
          <FormControl>
           <TextInput
-           error={!!createForm.formState.errors.name}
-           placeholder={kanbanStrings.createTaskModal.labels.name}
+           error={!!editForm.formState.errors.name}
+           placeholder={kanbanStrings.editTaskModal.labels.name}
            {...field}
           />
          </FormControl>
-         {createForm.formState.errors.name ? (
-          <ErrorCaption>{createForm.formState.errors.name.message}</ErrorCaption>
-         ) : null}
+         {editForm.formState.errors.name ? <ErrorCaption>{editForm.formState.errors.name.message}</ErrorCaption> : null}
         </FormItem>
        )}
       />

@@ -7,3 +7,4 @@ const taskFormStrings = {
 export const taskFormSchema = z.object({
  name: z.string().nonempty({ message: taskFormStrings.emptyName }),
 });
+
