@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}": typeof types.CreateBoardDocument,
+    "mutation CreateCard($cardData: CreateCardInput!) {\n  createCard(data: $cardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": typeof types.CreateCardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.CreateUserDocument,
     "mutation DeleteBoard($boardId: String!) {\n  deleteBoard(boardId: $boardId) {\n    message\n  }\n}": typeof types.DeleteBoardDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.LoginDocument,
@@ -24,6 +25,7 @@ type Documents = {
 };
 const documents: Documents = {
     "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}": types.CreateBoardDocument,
+    "mutation CreateCard($cardData: CreateCardInput!) {\n  createCard(data: $cardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": types.CreateCardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.CreateUserDocument,
     "mutation DeleteBoard($boardId: String!) {\n  deleteBoard(boardId: $boardId) {\n    message\n  }\n}": types.DeleteBoardDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.LoginDocument,
@@ -50,6 +52,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}"): (typeof documents)["mutation CreateBoard($boardInput: BoardInput!) {\n  createBoard(data: $boardInput) {\n    id\n    name\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateCard($cardData: CreateCardInput!) {\n  createCard(data: $cardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}"): (typeof documents)["mutation CreateCard($cardData: CreateCardInput!) {\n  createCard(data: $cardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

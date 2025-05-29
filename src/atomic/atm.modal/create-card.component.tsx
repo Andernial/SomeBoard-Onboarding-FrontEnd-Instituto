@@ -1,5 +1,5 @@
 import { Modal } from './modal.component';
-import { H1, H2, InputLabel } from '@atomic/atm.typography';
+import { H1, InputLabel } from '@atomic/atm.typography';
 import { kanbanStrings } from '@/app/modules/kanban/kanban.page.strings';
 import { Button } from '@atomic/atm.button';
 import { useToast } from '@/hooks/use-toast';
@@ -13,6 +13,7 @@ import z from 'zod';
 import { ErrorCaption } from '@atomic/atm.error-caption';
 import { FormControl, FormField, FormItem } from '@components/ui/form';
 import { TextInput } from '@atomic/atm.text-input';
+import { useCreateCard } from '@domain/card/create-card.use-case';
 
 interface CreateBoardProps {
  id: string;
@@ -26,15 +27,31 @@ export function CreateCard({ isOpen, onClose, id, column, order }: CreateBoardPr
  const [reqError, setReqError] = useState<string>();
  const { toast } = useToast();
 
+ const { createCardMutation, loading } = useCreateCard({
+  onCompleted: () => {
+   toast({ title: kanbanStrings.createTaskModal.sucessCreated });
+   onClose();
+  },
+  onError: (error) => {
+   setReqError(error.message);
+  },
+  boardId: id,
+ });
+
  const handleCreateCardSubmit = (values: z.infer<typeof taskFormSchema>) => {
   const newOrder =
    order.length > 1 ? order.reduce((current, previous) => (current > previous ? current : previous)) + 1 : 0;
-  const newTask = { ...values, id, column, newOrder };
 
-  console.log(newTask);
+  const cardData = { ...values, boardId: id, column, order: newOrder };
+
+  createCardMutation({ variables: { cardData } });
   createForm.reset();
-  onClose()
  };
+
+ const handleCloseModal = () =>{
+    createForm.clearErrors()
+    onClose()
+ }
 
  const createForm = useForm<z.infer<typeof taskFormSchema>>({
   resolver: zodResolver(taskFormSchema),
@@ -43,7 +60,7 @@ export function CreateCard({ isOpen, onClose, id, column, order }: CreateBoardPr
  });
 
  return (
-  <Modal isOpen={isOpen} onClose={onClose}>
+  <Modal isOpen={isOpen} onClose={handleCloseModal}>
    <FormAtm
     form={createForm}
     className="h-full flex items-center justify-center"
@@ -72,7 +89,7 @@ export function CreateCard({ isOpen, onClose, id, column, order }: CreateBoardPr
         </FormItem>
        )}
       />
-      <Button type="submit" className="w-full mt-md mb-md" color="primary">
+      <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
        {kanbanStrings.createModal.create}
       </Button>
      </>
