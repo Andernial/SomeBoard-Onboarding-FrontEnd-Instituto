@@ -18,7 +18,7 @@ export const kanbanStrings = {
   createTaskModal: {
   title: 'Criar nova tarefa',
   create: 'Criar',
-  sucessEdited: 'Projeto editado com sucesso',
+  sucessCreated: 'Tarefa criada com sucesso',
   labels: {
    name: 'Nome da tarefa',
   },

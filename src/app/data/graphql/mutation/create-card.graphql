@@ -1,0 +1,11 @@
+mutation CreateCard($cardData: CreateCardInput!) {
+  createCard(data: $cardData) {
+    id
+    createdAt
+    name
+    description
+    points
+    order
+    column
+  }
+}

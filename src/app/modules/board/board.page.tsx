@@ -2,10 +2,10 @@ import { H1 } from '@atomic/atm.typography';
 import { boardStrings } from './board-page.strings';
 import { BoardColumn } from '@atomic/atm.board/board.component';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
-import React, { useState } from 'react';
+import React from 'react';
 import { useBoard } from '@domain/board/board.use-case';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Card, CardColumns } from '@data/graphql/generated/graphql';
+import { CardColumns } from '@data/graphql/generated/graphql';
 
 const boardColumns = [
  { columName: 'A fazer', columnType: CardColumns.ToDo },
@@ -15,7 +15,6 @@ const boardColumns = [
 ] as const;
 
 export function BoardPage() {
- const [cardsState, setCardsState] = useState<Card[]>([]);
  const { boardId } = useParams<{ boardId: string }>();
  const navigate = useNavigate();
 
@@ -24,9 +23,6 @@ export function BoardPage() {
  }
 
  const { data, loading } = useBoard({
-  onCompleted: (data) => {
-   setCardsState(data.board.cards);
-  },
   variables: { boardId: boardId! },
  });
 
@@ -38,6 +34,8 @@ export function BoardPage() {
   if (destination.droppableId === source.droppableId && destination.index === source.index) {
    return;
   }
+
+  const cardsState = data?.board.cards ?? [];
 
   const draggedCardId = draggableId;
   const draggedCard = cardsState.find((card) => card.id === draggedCardId);
@@ -76,8 +74,6 @@ export function BoardPage() {
     updatedSource.find((cardU) => cardU.id === card.id) || updatedDestination.find((cardU) => cardU.id === card.id);
    return updated ? updated : card;
   });
-
-  setCardsState(updatedCards);
  };
 
  return (
@@ -88,13 +84,18 @@ export function BoardPage() {
    <div className="grid grid-cols-4 h-full w-[90%] gap-sm pt-md">
     <DragDropContext onDragEnd={handleOnDragEnd}>
      {boardColumns.map((type) => {
-      const columnCards = cardsState
-       .filter((card) => card.column === type.columnType)
-       .sort((a, b) => a.order - b.order);
+      const columnCards =
+       data?.board.cards.filter((card) => card.column === type.columnType).sort((a, b) => a.order - b.order) ?? [];
 
       return (
        <React.Fragment key={type.columnType}>
-        <BoardColumn columName={type.columName} columnType={type.columnType} cards={columnCards} loading={loading} id={boardId!} />
+        <BoardColumn
+         columName={type.columName}
+         columnType={type.columnType}
+         cards={columnCards}
+         loading={loading}
+         id={boardId!}
+        />
        </React.Fragment>
       );
      })}
