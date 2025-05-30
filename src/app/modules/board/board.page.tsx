@@ -94,7 +94,7 @@ export function BoardPage() {
 
       return (
        <React.Fragment key={type.columnType}>
-        <BoardColumn columName={type.columName} columnType={type.columnType} cards={columnCards} loading={loading} />
+        <BoardColumn columName={type.columName} columnType={type.columnType} cards={columnCards} loading={loading} id={boardId!} />
        </React.Fragment>
       );
      })}
