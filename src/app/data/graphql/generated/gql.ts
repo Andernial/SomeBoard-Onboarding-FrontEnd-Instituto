@@ -18,6 +18,7 @@ type Documents = {
     "mutation CreateCard($cardData: CreateCardInput!) {\n  createCard(data: $cardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": typeof types.CreateCardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.CreateUserDocument,
     "mutation DeleteBoard($boardId: String!) {\n  deleteBoard(boardId: $boardId) {\n    message\n  }\n}": typeof types.DeleteBoardDocument,
+    "mutation DeleteCard($cardId: String!) {\n  deleteCard(cardId: $cardId)\n}": typeof types.DeleteCardDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.LoginDocument,
     "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}": typeof types.UpdateBoardDocument,
     "mutation UpdateCard($updateCardData: UpdateCardInput!) {\n  updateCard(data: $updateCardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": typeof types.UpdateCardDocument,
@@ -29,6 +30,7 @@ const documents: Documents = {
     "mutation CreateCard($cardData: CreateCardInput!) {\n  createCard(data: $cardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": types.CreateCardDocument,
     "mutation CreateUser($UserInput: UserInput!) {\n  createUser(data: $UserInput) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.CreateUserDocument,
     "mutation DeleteBoard($boardId: String!) {\n  deleteBoard(boardId: $boardId) {\n    message\n  }\n}": types.DeleteBoardDocument,
+    "mutation DeleteCard($cardId: String!) {\n  deleteCard(cardId: $cardId)\n}": types.DeleteCardDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.LoginDocument,
     "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}": types.UpdateBoardDocument,
     "mutation UpdateCard($updateCardData: UpdateCardInput!) {\n  updateCard(data: $updateCardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": types.UpdateCardDocument,
@@ -66,6 +68,10 @@ export function graphql(source: "mutation CreateUser($UserInput: UserInput!) {\n
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation DeleteBoard($boardId: String!) {\n  deleteBoard(boardId: $boardId) {\n    message\n  }\n}"): (typeof documents)["mutation DeleteBoard($boardId: String!) {\n  deleteBoard(boardId: $boardId) {\n    message\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation DeleteCard($cardId: String!) {\n  deleteCard(cardId: $cardId)\n}"): (typeof documents)["mutation DeleteCard($cardId: String!) {\n  deleteCard(cardId: $cardId)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

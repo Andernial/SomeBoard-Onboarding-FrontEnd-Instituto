@@ -50,7 +50,7 @@ export function EditCard({ isOpen, onClose, card }: EditBoardProps) {
  const editForm = useForm<z.infer<typeof taskFormSchema>>({
   resolver: zodResolver(taskFormSchema),
   mode: 'onChange',
-  defaultValues: isOpen ? { name: card.name } : { name: '' },
+  defaultValues: { name: card.name },
  });
 
  return (
