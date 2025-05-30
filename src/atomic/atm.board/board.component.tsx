@@ -8,7 +8,7 @@ import { KanbanCard } from '@atomic/atm.card/kanban-card.component';
 import { Card, CardColumns } from '@data/graphql/generated/graphql';
 import { ColumnCardSkeleton } from '@atomic/atm.card/column-card.skeleton';
 import { useState } from 'react';
-import { CreateCard } from '@atomic/atm.modal/create-card.component';
+import { CreateCard } from '@atomic/atm.modal';
 
 interface BoardProps {
  id: string;
@@ -20,10 +20,6 @@ interface BoardProps {
 
 export function BoardColumn({ columName, columnType, cards, loading, id }: BoardProps) {
  const [createModalOpen, setCreateModalOpen] = useState(false);
-
- const handleCreateModalClose = () => {
-  setCreateModalOpen(false);
- };
 
  return (
   <div className="flex items-center flex-col h-[70vh] max-h-[660px] bg-grayScale-white rounded-md">
@@ -56,7 +52,7 @@ export function BoardColumn({ columName, columnType, cards, loading, id }: Board
 
    <CreateCard
     isOpen={createModalOpen}
-    onClose={handleCreateModalClose}
+    onClose={() => setCreateModalOpen(false)}
     column={columnType}
     id={id}
     order={cards.map((card) => card.order)}
