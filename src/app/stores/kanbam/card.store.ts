@@ -1,6 +1,5 @@
 import { Card } from '@data/graphql/generated/graphql';
 import { create } from 'zustand';
-// import { persist, createJSONStorage } from 'zustand/middleware';
 
 type cardStore = {
  cards: Card[];
