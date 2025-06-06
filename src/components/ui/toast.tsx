@@ -30,6 +30,7 @@ const toastVariants = cva(
     variants: {
       variant: {
         default: "border bg-brand-primary-light text-md",
+        error: "border bg-feedback-error-light text-md text-gray-light",
       },
     },
     defaultVariants: {

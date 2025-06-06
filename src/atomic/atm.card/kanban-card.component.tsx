@@ -10,6 +10,7 @@ import { Card } from '@data/graphql/generated/graphql';
 import { useUserStorage } from '@/app/stores/user.store';
 import { useState } from 'react';
 import { DeleteCard, EditCard } from '@atomic/atm.modal';
+import { useCardStorage } from '@/app/stores/kanbam/card.store';
 
 interface CardProps {
  card: Card;
@@ -26,6 +27,7 @@ const CardStrings = {
 
 export function KanbanCard({ className, card, index, boardId }: CardProps) {
  const { name } = useUserStorage.getState();
+ const {cards} = useCardStorage()
  const [editModalOpen, setEditModalOpen] = useState(false);
  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -42,7 +44,7 @@ export function KanbanCard({ className, card, index, boardId }: CardProps) {
       <div className="w-[90%]">
        <div className="flex items-center justify-between pt-xs">
         <H4 className="text-start">{card.name}</H4>
-        <img src={editIcon} className="size-sm inline-flex cursor-pointer" onClick={() => setEditModalOpen(true)} />
+        <img src={editIcon} className="size-sm inline-flex cursor-pointer" onClick={() => {setEditModalOpen(true), console.log(cards)}} />
        </div>
 
        <div className="flex pt-xxs w-full justify-between items-center">

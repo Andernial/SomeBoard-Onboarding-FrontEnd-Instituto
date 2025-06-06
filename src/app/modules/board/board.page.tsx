@@ -2,10 +2,13 @@ import { H1 } from '@atomic/atm.typography';
 import { boardStrings } from './board-page.strings';
 import { BoardColumn } from '@atomic/atm.board/board.component';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useBoard } from '@domain/board/board.use-case';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CardColumns } from '@data/graphql/generated/graphql';
+import { Card, CardColumns } from '@data/graphql/generated/graphql';
+import { useUpdateCard } from '@domain/card/update-card.use-case';
+import { toast } from '@/hooks/use-toast';
+import { useCardStorage } from '@/app/stores/kanbam/card.store';
 
 const boardColumns = [
  { columName: 'A fazer', columnType: CardColumns.ToDo },
@@ -16,15 +19,33 @@ const boardColumns = [
 
 export function BoardPage() {
  const { boardId } = useParams<{ boardId: string }>();
+ const [cardPreviousState, setCardPreviousState] = useState<Card>();
  const navigate = useNavigate();
 
  if (!boardId) {
   navigate('*');
  }
 
- const { data, loading } = useBoard({
+ const { loading } = useBoard({
   variables: { boardId: boardId! },
  });
+
+ const { cards, setCards, updateCard } = useCardStorage();
+
+ const { updateCardMutation } = useUpdateCard({
+  onError: (error) => {
+   toast({ title: error.message, variant: 'error' });
+   updateCard(cardPreviousState!);
+  },
+ });
+
+ const handleCardColumnUpdate = (input: { card: Card; newColumn: CardColumns }) => {
+  const { card, newColumn } = input;
+  setCardPreviousState(card);
+  const updateCardData = { column: newColumn, id: card.id,name: card.name };
+
+  updateCardMutation({ variables: { updateCardData } });
+ };
 
  const handleOnDragEnd = (result: DropResult) => {
   const { destination, source, draggableId } = result;
@@ -35,21 +56,23 @@ export function BoardPage() {
    return;
   }
 
-  const cardsState = data?.board.cards ?? [];
-
   const draggedCardId = draggableId;
-  const draggedCard = cardsState.find((card) => card.id === draggedCardId);
+  const draggedCard = cards.find((card) => card.id === draggedCardId);
   if (!draggedCard) return;
 
   const sourceColumn = source.droppableId;
   const destinationColumn = destination.droppableId as CardColumns;
 
-  const sourceCards = cardsState.filter((card) => card.column === sourceColumn).sort((a, b) => a.order - b.order);
+  if (destinationColumn !== sourceColumn) {
+   handleCardColumnUpdate({ card: draggedCard, newColumn: destinationColumn });
+  }
+
+  const sourceCards = cards.filter((card) => card.column === sourceColumn).sort((a, b) => a.order - b.order);
 
   const destinationCards =
    sourceColumn === destinationColumn
     ? sourceCards
-    : cardsState.filter((card) => card.column === destinationColumn).sort((a, b) => a.order - b.order);
+    : cards.filter((card) => card.column === destinationColumn).sort((a, b) => a.order - b.order);
 
   const movedCard = {
    ...draggedCard,
@@ -69,11 +92,13 @@ export function BoardPage() {
    order: index,
   }));
 
-  const updatedCards = cardsState.map((card) => {
+  const updatedCards = cards.map((card) => {
    const updated =
     updatedSource.find((cardU) => cardU.id === card.id) || updatedDestination.find((cardU) => cardU.id === card.id);
    return updated ? updated : card;
   });
+
+  setCards(updatedCards);
  };
 
  return (
@@ -85,7 +110,7 @@ export function BoardPage() {
     <DragDropContext onDragEnd={handleOnDragEnd}>
      {boardColumns.map((type) => {
       const columnCards =
-       data?.board.cards.filter((card) => card.column === type.columnType).sort((a, b) => a.order - b.order) ?? [];
+       cards.filter((card) => card.column === type.columnType).sort((a, b) => a.order - b.order) ?? [];
 
       return (
        <React.Fragment key={type.columnType}>
