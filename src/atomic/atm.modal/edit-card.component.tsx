@@ -14,6 +14,7 @@ import { ErrorCaption } from '@atomic/atm.error-caption';
 import { FormControl, FormField, FormItem } from '@components/ui/form';
 import { TextInput } from '@atomic/atm.text-input';
 import { useUpdateCard } from '@domain/card/update-card.use-case';
+import { useCardStorage } from '@/app/stores/kanbam/card.store';
 
 interface EditBoardProps {
  card: Card;
@@ -23,10 +24,12 @@ interface EditBoardProps {
 
 export function EditCard({ isOpen, onClose, card }: EditBoardProps) {
  const [reqError, setReqError] = useState<string>();
+ const { updateCard } = useCardStorage();
  const { toast } = useToast();
 
  const { updateCardMutation, loading } = useUpdateCard({
   onCompleted: (data) => {
+   updateCard(data.updateCard);
    editForm.reset({ name: data.updateCard.name });
    toast({ title: kanbanStrings.editTaskModal.sucessEdited });
    onClose();

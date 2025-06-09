@@ -21,6 +21,7 @@ type Documents = {
     "mutation DeleteCard($cardId: String!) {\n  deleteCard(cardId: $cardId)\n}": typeof types.DeleteCardDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": typeof types.LoginDocument,
     "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}": typeof types.UpdateBoardDocument,
+    "mutation UpdateCardOrder($updateCardOrderData: [UpdateCardOrderInput!]!) {\n  updateCardOrder(data: $updateCardOrderData)\n}": typeof types.UpdateCardOrderDocument,
     "mutation UpdateCard($updateCardData: UpdateCardInput!) {\n  updateCard(data: $updateCardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": typeof types.UpdateCardDocument,
     "query Board($boardId: String!) {\n  board(boardId: $boardId) {\n    id\n    name\n    cards {\n      id\n      createdAt\n      name\n      description\n      points\n      order\n      column\n    }\n  }\n}": typeof types.BoardDocument,
     "query Boards($boardsPageInput: PageInput!) {\n  boards(pageInput: $boardsPageInput) {\n    pageInfo {\n      offset\n      limit\n      hasNextPage\n      hasPreviousPage\n    }\n    nodes {\n      id\n      name\n    }\n    count\n  }\n}": typeof types.BoardsDocument,
@@ -33,6 +34,7 @@ const documents: Documents = {
     "mutation DeleteCard($cardId: String!) {\n  deleteCard(cardId: $cardId)\n}": types.DeleteCardDocument,
     "mutation Login($loginData: LoginInput!) {\n  login(data: $loginData) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}": types.LoginDocument,
     "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}": types.UpdateBoardDocument,
+    "mutation UpdateCardOrder($updateCardOrderData: [UpdateCardOrderInput!]!) {\n  updateCardOrder(data: $updateCardOrderData)\n}": types.UpdateCardOrderDocument,
     "mutation UpdateCard($updateCardData: UpdateCardInput!) {\n  updateCard(data: $updateCardData) {\n    id\n    createdAt\n    name\n    description\n    points\n    order\n    column\n  }\n}": types.UpdateCardDocument,
     "query Board($boardId: String!) {\n  board(boardId: $boardId) {\n    id\n    name\n    cards {\n      id\n      createdAt\n      name\n      description\n      points\n      order\n      column\n    }\n  }\n}": types.BoardDocument,
     "query Boards($boardsPageInput: PageInput!) {\n  boards(pageInput: $boardsPageInput) {\n    pageInfo {\n      offset\n      limit\n      hasNextPage\n      hasPreviousPage\n    }\n    nodes {\n      id\n      name\n    }\n    count\n  }\n}": types.BoardsDocument,
@@ -80,6 +82,10 @@ export function graphql(source: "mutation Login($loginData: LoginInput!) {\n  lo
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}"): (typeof documents)["mutation UpdateBoard($updateBoardData: BoardUpdateInput!) {\n  updateBoard(data: $updateBoardData) {\n    id\n    name\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateCardOrder($updateCardOrderData: [UpdateCardOrderInput!]!) {\n  updateCardOrder(data: $updateCardOrderData)\n}"): (typeof documents)["mutation UpdateCardOrder($updateCardOrderData: [UpdateCardOrderInput!]!) {\n  updateCardOrder(data: $updateCardOrderData)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

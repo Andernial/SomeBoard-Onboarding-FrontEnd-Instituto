@@ -9,6 +9,7 @@ import { Card, CardColumns } from '@data/graphql/generated/graphql';
 import { useUpdateCard } from '@domain/card/update-card.use-case';
 import { toast } from '@/hooks/use-toast';
 import { useCardStorage } from '@/app/stores/kanbam/card.store';
+import { useUpdateCardOrder } from '@domain/card/update-card-order.use-case';
 
 const boardColumns = [
  { columName: 'A fazer', columnType: CardColumns.ToDo },
@@ -19,7 +20,7 @@ const boardColumns = [
 
 export function BoardPage() {
  const { boardId } = useParams<{ boardId: string }>();
- const [cardPreviousState, setCardPreviousState] = useState<Card>();
+ const [sourcePreviousState, setSourcePreviousState] = useState<Card[]>();
  const navigate = useNavigate();
 
  if (!boardId) {
@@ -30,25 +31,32 @@ export function BoardPage() {
   variables: { boardId: boardId! },
  });
 
- const { cards, setCards, updateCard } = useCardStorage();
+ const { cards, setCards } = useCardStorage();
 
  const { updateCardMutation } = useUpdateCard({
   onError: (error) => {
    toast({ title: error.message, variant: 'error' });
-
-   if(cardPreviousState){
-   updateCard(cardPreviousState);
-   }
-
+   setCards(sourcePreviousState!);
   },
  });
 
- const handleCardColumnUpdate = (input: { card: Card; newColumn: CardColumns }) => {
+ const { updateCardOrderMutation } = useUpdateCardOrder({
+  onError: (error) => {
+   toast({ title: error.message, variant: 'error' });
+   setCards(sourcePreviousState!);
+  },
+ });
+
+ const handleCardColumnUpdate = (input: { card: Card; newColumn?: CardColumns; newOrder?: number }) => {
   const { card, newColumn } = input;
-  setCardPreviousState(card);
-  const updateCardData = { column: newColumn, id: card.id,name: card.name };
+  const updateCardData = { column: newColumn, id: card.id, name: card.name };
 
   updateCardMutation({ variables: { updateCardData } });
+ };
+
+ const handleUpdateCardOrder = (updatedCards: Card[]) => {
+  const updateCardOrderData = updatedCards.map((card) => ({ id: card.id, order: card.order }));
+  updateCardOrderMutation({ variables: { updateCardOrderData } });
  };
 
  const handleOnDragEnd = (result: DropResult) => {
@@ -66,6 +74,8 @@ export function BoardPage() {
 
   const sourceColumn = source.droppableId;
   const destinationColumn = destination.droppableId as CardColumns;
+
+  setSourcePreviousState(cards)
 
   if (destinationColumn !== sourceColumn) {
    handleCardColumnUpdate({ card: draggedCard, newColumn: destinationColumn });
@@ -99,9 +109,17 @@ export function BoardPage() {
   const updatedCards = cards.map((card) => {
    const updated =
     updatedSource.find((cardU) => cardU.id === card.id) || updatedDestination.find((cardU) => cardU.id === card.id);
+
    return updated ? updated : card;
   });
 
+  const changedCards = updatedCards.filter((updated) => {
+   const sameCard = cards.find((filteredCard) => filteredCard.id === updated.id);
+
+   return sameCard && sameCard.order !== updated.order;
+  });
+
+  handleUpdateCardOrder(changedCards);
   setCards(updatedCards);
  };
 
