@@ -35,7 +35,11 @@ export function BoardPage() {
  const { updateCardMutation } = useUpdateCard({
   onError: (error) => {
    toast({ title: error.message, variant: 'error' });
-   updateCard(cardPreviousState!);
+
+   if(cardPreviousState){
+   updateCard(cardPreviousState);
+   }
+
   },
  });
 
