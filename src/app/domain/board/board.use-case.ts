@@ -1,5 +1,6 @@
 import { BoardDocument, BoardQuery, BoardQueryVariables } from '@data/graphql/generated/graphql';
 import { ApolloError, useQuery } from '@apollo/client';
+import { useCardStorage } from '@/app/stores/kanbam/card.store';
 
 interface UseBoardProps {
  variables: BoardQueryVariables;
@@ -8,8 +9,12 @@ interface UseBoardProps {
 }
 
 export function useBoard({ onCompleted, onError, variables }: UseBoardProps) {
+ const { setCards } = useCardStorage();
  const { data, loading, error, refetch } = useQuery<BoardQuery, BoardQueryVariables>(BoardDocument, {
-  onCompleted,
+  onCompleted: (data) => {
+   setCards(data.board.cards);
+   onCompleted?.(data);
+  },
   onError,
   variables,
   fetchPolicy: 'network-only',

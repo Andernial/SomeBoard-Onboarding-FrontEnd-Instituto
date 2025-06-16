@@ -26,8 +26,8 @@ export function EditCard({ isOpen, onClose, card }: EditBoardProps) {
  const { toast } = useToast();
 
  const { updateCardMutation, loading } = useUpdateCard({
-  onCompleted: () => {
-   editForm.reset({ name: card.name });
+  onCompleted: (data) => {
+   editForm.reset({ name: data.updateCard.name });
    toast({ title: kanbanStrings.editTaskModal.sucessEdited });
    onClose();
   },
@@ -82,7 +82,7 @@ export function EditCard({ isOpen, onClose, card }: EditBoardProps) {
        )}
       />
       <Button type="submit" className="w-full mt-md mb-md" color="primary" disabled={!!loading}>
-       {kanbanStrings.createModal.create}
+       {kanbanStrings.editTaskModal.edit}
       </Button>
      </>
     </div>

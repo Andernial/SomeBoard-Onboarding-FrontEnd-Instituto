@@ -42,7 +42,7 @@ export function KanbanCard({ className, card, index, boardId }: CardProps) {
       <div className="w-[90%]">
        <div className="flex items-center justify-between pt-xs">
         <H4 className="text-start">{card.name}</H4>
-        <img src={editIcon} className="size-sm inline-flex cursor-pointer" onClick={() => setEditModalOpen(true)} />
+        <img src={editIcon} className="size-sm inline-flex cursor-pointer" onClick={() => {setEditModalOpen(true)}} />
        </div>
 
        <div className="flex pt-xxs w-full justify-between items-center">
