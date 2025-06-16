@@ -1,0 +1,3 @@
+mutation UpdateCardOrder($updateCardOrderData: [UpdateCardOrderInput!]!) {
+  updateCardOrder(data: $updateCardOrderData)
+}
