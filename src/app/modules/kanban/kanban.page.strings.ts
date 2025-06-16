@@ -3,6 +3,7 @@ export const kanbanStrings = {
  createButton: 'Criar projeto',
  sucessCreated: 'Projeto criado com sucesso!',
  projectName: 'Nome do projeto:',
+ taskName: 'Nome da tarefa:',
  createdAt: 'Criado em xx/xx/xxxx',
  next: 'Próximo',
  previous: 'Anterior',
@@ -31,6 +32,13 @@ export const kanbanStrings = {
   labels: {
    name: 'Nome da tarefa',
   },
+ },
+
+  deleteTaskModal: {
+  title: 'Tem certeza de que deseja deletar esta tarefa?',
+  delete: 'Deletar',
+  cancelModal: 'Cancelar',
+  sucessDeleted: 'Tarefa deletado com sucesso',
  },
 
  editModal: {

@@ -42,7 +42,7 @@ export function BoardColumn({ columName, columnType, cards, loading, id }: Board
        {...provided.droppableProps}
       >
        {cards.map((card, index) => (
-        <KanbanCard card={card} key={card.id} index={index} className="mt-xxs" />
+        <KanbanCard card={card} key={card.id} index={index} boardId={id} className="mt-xxs" />
        ))}
        {provided.placeholder}
       </div>
